@@ -84,7 +84,7 @@ export default function Swap() {
 
       const handleClose = () => {
         onClose(selectedValue);
-        
+        setchartFE(true);
       };
 
       const handleListItemClick = (value) => {
