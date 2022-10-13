@@ -43,10 +43,15 @@ export function numberWithCommas(x) {
 }
 export default function Swap() {
   const [coin, setCoin] = useState();
-  const [coin2, setCoin2] = useState(null);
+  const [coin2, setCoin2] = useState(false);
   const [chartFE, setchartFE] = useState(false);
+  const fetchChartCoin = async (id) => {
+    const { data } = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${id}`
+    );
 
-
+    setCoin(data);
+  };
 
   const Popup1 = () => {
     const [coin, setCoin] = useState();
@@ -67,9 +72,8 @@ export default function Swap() {
 
     const handleClose = () => {
       setOpen(false);
-      setchartFE(true);
     };
-
+    
     function SimpleDialog(props) {
       const [coins, setCoins] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -80,10 +84,12 @@ export default function Swap() {
 
       const handleClose = () => {
         onClose(selectedValue);
+        
       };
 
       const handleListItemClick = (value) => {
         onClose(value);
+ 
       };
       const fetchmarketCoins = async () => {
         setLoading(true);
@@ -98,13 +104,7 @@ export default function Swap() {
         fetchmarketCoins();
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
-      const fetchChartCoin = async (id) => {
-        const { data } = await axios.get(
-          `https://api.coingecko.com/api/v3/coins/${id}`
-        );
-    
-        setCoin(data);
-      };
+
       const handleSearch = () => {
         return coins.filter(
           (coin) =>
@@ -116,7 +116,7 @@ export default function Swap() {
       const handleSelect = (value) => {
         setchartFE(false);
         localStorage.removeItem("id");
-        localStorage.setItem("id", JSON.stringify(value));
+        localStorage.setItem("id", JSON.stringify(value))
         setSelectcoin(value);
         fetchCoin(value);
         fetchChartCoin(value);
