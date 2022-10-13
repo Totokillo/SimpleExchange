@@ -26,7 +26,7 @@ import TextField from '@mui/material/TextField';
 import LinearProgress from '@mui/material/LinearProgress';
 import Pagination from '@mui/material/Pagination';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-
+import Box from "@mui/material/Box";
 export function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -93,145 +93,138 @@ export default function Popup() {
       };
 
     return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Choose Coin {Selectcoin}</DialogTitle>
-      <Container style={{ textAlign: "center" }}>
-        <TextField
-          label="Search For a Crypto Currency.."
-          variant="outlined"
-          style={{ marginBottom: 20, width: "100%" }}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <TableContainer component={Paper}>
-          {loading ? (
-            <LinearProgress style={{ backgroundColor: "gold" }} />
-          ) : (
-            <Table aria-label="simple table">
-              <TableHead style={{ backgroundColor: "#EEBC1D" }}>
-                <TableRow>
-                  {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
-                    <TableCell
-                      style={{
-                        color: "black",
-                        fontWeight: "700",
-                        fontFamily: "Montserrat",
-                      }}
-                      key={head}
-                      align={head === "Coin" ? "" : "right"}
-                    >
-                      {head}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {handleSearch()
-                  .slice((page - 1) * 10, (page - 1) * 10 + 10)
-                  .map((row) => {
-                    const profit = row.price_change_percentage_24h > 0;
-                    return (
-                      <TableRow
-                     
-                        className={row}
-                        key={row.name}
+      <Dialog onClose={handleClose} open={open} fullWidth
+      maxWidth="lg">
+        <DialogTitle>Choose Coin </DialogTitle>
+        <Container style={{ textAlign: "center" }}>
+          <TextField
+            label="Search For a Crypto Currency.."
+            variant="outlined"
+            style={{ marginBottom: 20, width: "100%" }}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <TableContainer component={Paper}>
+          <Box sx={{ flexGrow: 1 }}>
+            {loading ? (
+              <LinearProgress style={{ backgroundColor: "gold" }} />
+            ) : (
+              <Table aria-label="simple table">
+                <TableBody>
+                  {handleSearch()
+                    .slice((page - 1) * 9, (page - 1) * 9 + 9)
+                    .map((row) => {
+                      const profit = row.price_change_percentage_24h > 0;
+                      return ( 
+                 
+                        <Button
+                        onClick={() => handleSelect(row.id)}
+                        style={{maxWidth: '370px', maxHeight: '300px', minWidth: '370px', minHeight: '220px'}}variant="outlined"
                       >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          style={{
-                            display: "flex",
-                            gap: 15,
-                          }}
-                        >
-                        <IconButton  onClick={() => handleSelect(row.id)} sx={{ p: 0 }}>
-                          <img
-                            src={row?.image}
-                            alt={row.name}
-                            height="50"
-                            style={{ marginBottom: 10 }}
-                          />
-                          </IconButton>
-                          <div
-                            style={{ display: "flex", flexDirection: "column" }}
+                        <TableRow className={row} key={row.name}>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            style={{
+                              display: "flex",
+                              gap: 15,
+                            }}
                           >
-                            <span
+                            <img
+                              src={row?.image}
+                              alt={row.name}
+                              height="50"
+                              style={{ marginBottom: 10 }}
+                            />
+
+                            <div
                               style={{
-                                textTransform: "uppercase",
-                                fontSize: 22,
+                                display: "flex",
+                                flexDirection: "column",
                               }}
                             >
-                              {row.symbol}
-                            </span>
-                            <span style={{ color: "darkgrey" }}>
-                              {row.name}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell align="right">
-                         {" "}
-                          {numberWithCommas(row.current_price.toFixed(2))}
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: profit > 0 ? "rgb(14, 203, 129)" : "red",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {profit && "+"}
-                          {row.price_change_percentage_24h.toFixed(2)}%
-                        </TableCell>
-                        <TableCell align="right">
-                          {" "}
-                          {numberWithCommas(
-                            row.market_cap.toString().slice(0, -6)
-                          )}
-                          M
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          )}
-        </TableContainer>
+                              <span
+                                style={{
+                                  textTransform: "uppercase",
+                                  fontSize: 22,
+                                }}
+                              >
+                                {row.symbol}
+                              </span>
+                              <span style={{ color: "darkgrey" }}>
+                                {row.name}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell align="right" style={{
+                              fontWeight: 500,
+                            }}>
+                            Price{" "}
+                            {numberWithCommas(
+                              row.current_price.toFixed(2)
+                            )}{" "}
+                            ฿
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color:
+                                profit > 0 ? "rgb(14, 203, 129)" : "red",
+                              fontWeight: 500,
+                            }}
+                          >
+                            24h<br/>change{" "} {profit && "+"}
+                            {row.price_change_percentage_24h.toFixed(2)}%
+                          </TableCell>
+                          <TableCell align="right" style={{
+                              fontWeight: 500,
+                            }}>
+                            Market Cap{" "}
+                            {numberWithCommas(
+                              row.market_cap.toString().slice(0, -6)
+                            )}{" "}
+                            M
+                          </TableCell>
+                        </TableRow>
+                      </Button>
 
-        {/* Comes from @material-ui/lab */}
-        <Pagination
-          count={(handleSearch()?.length / 10).toFixed(0)}
-          style={{
-            padding: 20,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-          onChange={(_, value) => {
-            setPage(value);
-            window.scroll(0, 450);
-          }}
-        />
-      </Container>
-    </Dialog>
-  );
-}
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            )}
+               </Box>
+          </TableContainer>
+
+          {/* Comes from @material-ui/lab */}
+          <Pagination
+            count={(handleSearch()?.length / 10).toFixed(0)}
+            style={{
+              padding: 20,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            onChange={(_, value) => {
+              setPage(value);
+              window.scroll(0, 450);
+            }}
+          />
+        </Container>
+      </Dialog>
+    );
+  }
   return (
     <div>
-        <IconButton onClick={handleClickOpen} sx={{ p: 0 }}>
-        <Avatar aria-label="recipe"  sx={{ width: 24, height: 24 }}>
-          {Selectcoin ? 
-                      <img
-                       src = {coin?.image.thumb}
-                        loading="lazy"
-                      />:<CurrencyExchangeIcon/>
-                      }
-                    </Avatar>
-                    </IconButton>
-      <SimpleDialog
-        open={open}
-        onClose={handleClose}
-      />
+      <IconButton onClick={handleClickOpen} sx={{ p: 0 }}>
+        <Avatar aria-label="recipe" sx={{ width: 24, height: 24 }}>
+          {Selectcoin ? (
+            <img src={coin?.image.thumb} loading="lazy" />
+          ) : (
+            <CurrencyExchangeIcon />
+          )}
+        </Avatar>
+      </IconButton>
+      <SimpleDialog open={open} onClose={handleClose} />
     </div>
-    
   );
 }

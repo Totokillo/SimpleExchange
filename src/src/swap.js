@@ -31,8 +31,6 @@ import Pagination from "@mui/material/Pagination";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 
-
-
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
   backgroundColor: "#42C2FF",
@@ -46,16 +44,8 @@ export function numberWithCommas(x) {
 export default function Swap() {
   const [coin, setCoin] = useState();
   const [coin2, setCoin2] = useState(null);
- 
-  const [chartFE,setchartFE] = useState(false)
+  const [chartFE, setchartFE] = useState(false);
 
-  const fetchChartCoin = async (id) => {
-    const { data } = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/${id}`
-    );
-
-    setCoin(data);
-  };
 
 
   const Popup1 = () => {
@@ -77,8 +67,9 @@ export default function Swap() {
 
     const handleClose = () => {
       setOpen(false);
+      setchartFE(true);
     };
-    
+
     function SimpleDialog(props) {
       const [coins, setCoins] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -89,12 +80,10 @@ export default function Swap() {
 
       const handleClose = () => {
         onClose(selectedValue);
-        
       };
 
       const handleListItemClick = (value) => {
         onClose(value);
- 
       };
       const fetchmarketCoins = async () => {
         setLoading(true);
@@ -109,7 +98,13 @@ export default function Swap() {
         fetchmarketCoins();
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
-
+      const fetchChartCoin = async (id) => {
+        const { data } = await axios.get(
+          `https://api.coingecko.com/api/v3/coins/${id}`
+        );
+    
+        setCoin(data);
+      };
       const handleSearch = () => {
         return coins.filter(
           (coin) =>
@@ -121,7 +116,7 @@ export default function Swap() {
       const handleSelect = (value) => {
         setchartFE(false);
         localStorage.removeItem("id");
-        localStorage.setItem("id", JSON.stringify(value))
+        localStorage.setItem("id", JSON.stringify(value));
         setSelectcoin(value);
         fetchCoin(value);
         fetchChartCoin(value);
@@ -133,8 +128,9 @@ export default function Swap() {
       };
 
       return (
-        <Dialog onClose={handleClose} open={open}>
-          <DialogTitle>Choose Coin {Selectcoin}</DialogTitle>
+        <Dialog onClose={handleClose} open={open} fullWidth
+        maxWidth="lg">
+          <DialogTitle>Choose Coin </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <TextField
               label="Search For a Crypto Currency.."
@@ -143,36 +139,22 @@ export default function Swap() {
               onChange={(e) => setSearch(e.target.value)}
             />
             <TableContainer component={Paper}>
+            <Box sx={{ flexGrow: 1 }}>
               {loading ? (
                 <LinearProgress style={{ backgroundColor: "gold" }} />
               ) : (
                 <Table aria-label="simple table">
-                  <TableHead style={{ backgroundColor: "#42C2FF" }}>
-                    <TableRow>
-                      {["Coin", "Price", "24h Change", "Market Cap"].map(
-                        (head) => (
-                          <TableCell
-                            style={{
-                              color: "black",
-                              fontWeight: "700",
-                              fontFamily: "Montserrat",
-                            }}
-                            key={head}
-                            align={head === "Coin" ? "" : "right"}
-                          >
-                            {head}
-                          </TableCell>
-                        )
-                      )}
-                    </TableRow>
-                  </TableHead>
-
                   <TableBody>
                     {handleSearch()
-                      .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                      .slice((page - 1) * 9, (page - 1) * 9 + 9)
                       .map((row) => {
                         const profit = row.price_change_percentage_24h > 0;
-                        return (
+                        return ( 
+                   
+                          <Button
+                          onClick={() => handleSelect(row.id)}
+                          style={{maxWidth: '370px', maxHeight: '300px', minWidth: '370px', minHeight: '220px'}}variant="outlined"
+                        >
                           <TableRow className={row} key={row.name}>
                             <TableCell
                               component="th"
@@ -182,17 +164,13 @@ export default function Swap() {
                                 gap: 15,
                               }}
                             >
-                              <IconButton
-                                onClick={() => handleSelect(row.id)}
-                                sx={{ p: 0 }}
-                              >
-                                <img
-                                  src={row?.image}
-                                  alt={row.name}
-                                  height="50"
-                                  style={{ marginBottom: 10 }}
-                                />
-                              </IconButton>
+                              <img
+                                src={row?.image}
+                                alt={row.name}
+                                height="50"
+                                style={{ marginBottom: 10 }}
+                              />
+
                               <div
                                 style={{
                                   display: "flex",
@@ -212,33 +190,44 @@ export default function Swap() {
                                 </span>
                               </div>
                             </TableCell>
-                            <TableCell align="right">
-                              {" "}
-                              {numberWithCommas(row.current_price.toFixed(2))}
+                            <TableCell align="right" style={{
+                                fontWeight: 500,
+                              }}>
+                              Price{" "}
+                              {numberWithCommas(
+                                row.current_price.toFixed(2)
+                              )}{" "}
+                              ฿
                             </TableCell>
                             <TableCell
                               align="right"
                               style={{
-                                color: profit > 0 ? "rgb(14, 203, 129)" : "red",
+                                color:
+                                  profit > 0 ? "rgb(14, 203, 129)" : "red",
                                 fontWeight: 500,
                               }}
                             >
-                              {profit && "+"}
+                              24h<br/>change{" "} {profit && "+"}
                               {row.price_change_percentage_24h.toFixed(2)}%
                             </TableCell>
-                            <TableCell align="right">
-                              {" "}
+                            <TableCell align="right" style={{
+                                fontWeight: 500,
+                              }}>
+                              Market Cap{" "}
                               {numberWithCommas(
                                 row.market_cap.toString().slice(0, -6)
-                              )}
+                              )}{" "}
                               M
                             </TableCell>
                           </TableRow>
+                        </Button>
+ 
                         );
                       })}
                   </TableBody>
                 </Table>
               )}
+                 </Box>
             </TableContainer>
 
             {/* Comes from @material-ui/lab */}
@@ -274,6 +263,7 @@ export default function Swap() {
       </div>
     );
   };
+
   return (
     <Box
       component="main"
@@ -303,18 +293,19 @@ export default function Swap() {
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe">
-                      {coin?.image.small ?
-                      <img
-                        src={`${coin?.image.small}`}
-                        loading="lazy"
-                        sx={{ width: 50, height: 50 }}
-                      />: null}
+                      {coin?.image.small ? (
+                        <img
+                          src={`${coin?.image.small}`}
+                          loading="lazy"
+                          sx={{ width: 50, height: 50 }}
+                        />
+                      ) : null}
                     </Avatar>
                   }
                   title={coin2 ? coin?.name : null}
                 />
-                <CardContent>            
-                  {chartFE ?  <Chart/> :<div>Loading....</div>}
+                <CardContent>
+                  {chartFE ? <Chart /> : <div>Loading....</div>}
                 </CardContent>
               </Card>
             </Paper>
@@ -332,10 +323,7 @@ export default function Swap() {
               }}
             >
               <Card sx={{ maxWidth: 500 }}>
-                <CardHeader
-               
-                  title="Swap"
-                />
+                <CardHeader title="Swap" />
 
                 <CardContent>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
@@ -361,8 +349,8 @@ export default function Swap() {
                       bgcolor: "background.paper",
                       borderRadius: 1,
                     }}
-                  >                    
-                      <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
+                  >
+                    <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
                   </Box>
                   <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
                     <TextField

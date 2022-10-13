@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +13,7 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 
+import { ConnectW } from "../components/ConnectW";
 const pages = ["Swap", "Farms", "Pools"];
 
 const Header = () => {
@@ -21,7 +22,6 @@ const Header = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -35,8 +35,7 @@ const Header = () => {
       },
     },
   });
-
-
+  
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -100,20 +99,18 @@ const Header = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {
-                pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} href={page}>
-                  <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 1, color: "#000000", display: "block" }}
-                  href={page}
-                >
-                  <Typography textAlign="center">{page}</Typography>
-                </Button>
-                  
-                </MenuItem>
-                  ))}
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu} href={page}>
+                    <Button
+                      key={page}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 1, color: "#000000", display: "block" }}
+                      href={page}
+                    >
+                      <Typography textAlign="center">{page}</Typography>
+                    </Button>
+                  </MenuItem>
+                ))}
               </Menu>
             </Box>
             <CurrencyExchangeIcon
@@ -151,9 +148,7 @@ const Header = () => {
             </Box>
 
             <Box sx={{ width: "auto", flexGrow: 0, justifyContent: "center" }}>
-              <ColorButton variant="contained" fullWidth>
-                Connect Wallet
-              </ColorButton>
+              <ConnectW/>
             </Box>
           </Toolbar>
         </Container>

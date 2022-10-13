@@ -23,7 +23,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import OutlinedInput from "@mui/material/OutlinedInput";
-
+import { ConnectW } from "../components/ConnectW";
 function createData(name, calories, fat, carbs, protein, price) {
   return {
     name,
@@ -77,6 +77,11 @@ function Row(props) {
                   LP 0.0000 <br />
                   LP $0.0000
                 </Grid>
+                <Grid xs alignItems="center">
+                  Staked LPs
+                  <br />
+                  LP 0.0000 <br />
+                </Grid>
                 <Grid
                   xs
                   display="flex"
@@ -91,12 +96,7 @@ function Row(props) {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Button
-                    variant="contained"
-                  
-                  >
-                    Connext wallet
-                  </Button>
+                  <ConnectW/>
                 </Grid>
                 <Grid
                   xs
