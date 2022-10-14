@@ -85,6 +85,7 @@ export default function Swap() {
       const handleClose = () => {
         onClose(selectedValue);
         setchartFE(true);
+        localStorage.removeItem("id");
       };
 
       const handleListItemClick = (value) => {

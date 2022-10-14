@@ -273,6 +273,26 @@ export default function EnhancedTable() {
         transitionDuration: "0.3s",
         height: "12vw",
       };
+      const Root = styled(( theme ) => ({
+       Paper:{ 
+        [theme.breakpoints.down('sm')]: {
+          width: "20ch",
+          backgroundColor: "#EFFFFD",
+          justifyContent: "center",
+          p: 2,
+          display: "flex",
+          height: 150,
+       },[theme.breakpoints.down('md')]: {
+        width: "30ch",
+        backgroundColor: "#000",
+        justifyContent: "center",
+        p: 2,
+        display: "flex",
+        height: 350,
+     }
+        },
+
+      }));
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
           <DialogTitle style={{ textAlign: "center" }}>
@@ -280,16 +300,7 @@ export default function EnhancedTable() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-              <Paper
-                sx={{
-                  width: "40ch",
-                  backgroundColor: "#EFFFFD",
-                  justifyContent: "center",
-                  p: 2,
-                  display: "flex",
-                  height: 450,
-                }}
-              >
+             
                 <Card sx={{ maxWidth: 500 }}>
                   <CardContent>
                     <FormControl
@@ -353,7 +364,7 @@ export default function EnhancedTable() {
                     <ConnectW/>
                   </Box>
                 </Card>
-              </Paper>
+           
             </DialogContent>
           </Container>
         </Dialog>
@@ -404,16 +415,7 @@ export default function EnhancedTable() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-              <Paper
-                sx={{
-                  width: "40ch",
-                  backgroundColor: "#EFFFFD",
-                  justifyContent: "center",
-                  p: 2,
-                  display: "flex",
-                  height: 450,
-                }}
-              >
+
                 <Card sx={{ maxWidth: 500 }}>
                   <CardContent>
                     <FormControl
@@ -447,7 +449,7 @@ export default function EnhancedTable() {
                     </Box>
                   </CardContent>
                 </Card>
-              </Paper>
+       
             </DialogContent>
           </Container>
         </Dialog>
@@ -530,17 +532,15 @@ export default function EnhancedTable() {
                       <TableCell align="center">{row.carbs}</TableCell>
                       <TableCell align="center">{row.protein}</TableCell>
                       <TableCell>
-                        {" "}
                         <Box sx={{ flexGrow: 1 }}>
                           <Grid container spacing={1}>
-                            <Grid item xs={2}>
+                          
                               {Popup3()}
-                            </Grid>
-                            <Grid item xs={2}>
+                            <br/>&nbsp;
                               {Popup4()}
-                            </Grid>
+                           
                           </Grid>
-                        </Box>{" "}
+                        </Box>
                       </TableCell>
                     </TableRow>
                   );

@@ -10,8 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-import { purple } from "@mui/material/colors";
+import { createTheme, ThemeProvider} from "@mui/material/styles";
 
 import { ConnectW } from "../components/ConnectW";
 const pages = ["Swap", "Farms", "Pools"];
@@ -37,13 +36,6 @@ const Header = () => {
   });
   
 
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: "#42C2FF",
-    "&:hover": {
-      backgroundColor: "#85F4FF",
-    },
-  }));
   return (
     <ThemeProvider theme={customTheme}>
       <AppBar position="static" color={"secondary"}>
@@ -56,7 +48,7 @@ const Header = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              href="/Swap"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },

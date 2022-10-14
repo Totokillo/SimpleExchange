@@ -64,26 +64,26 @@ function Row(props) {
             <Box sx={{ flexGrow: 1 , mt:1 }}>
               <Grid container spacing={0}>
                 <Grid
-                  xs
+                  lg
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                 >
                   <Button variant="outlined">Get LP</Button>
-                </Grid>
+                </Grid>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                 <Grid xs alignItems="center">
                   Available
                   <br />
                   LP 0.0000 <br />
                   LP $0.0000
                 </Grid>
-                <Grid xs alignItems="center">
+                <Grid sm alignItems="center">
                   Staked LPs
                   <br />
                   LP 0.0000 <br />
-                </Grid>
+                </Grid>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                 <Grid
-                  xs
+                  sm
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
@@ -91,23 +91,23 @@ function Row(props) {
                   <ArrowForwardIosIcon />
                 </Grid>
                 <Grid
-                  xs
+                  sm
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                 >
                   <ConnectW/>
-                </Grid>
+                </Grid>&nbsp; &nbsp; 
                 <Grid
-                  xs
+                  sm
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                 >
                   <ArrowForwardIosIcon />
-                </Grid>
+                </Grid>&nbsp; &nbsp; 
                 <Grid
-                  xs
+                  sm
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
@@ -115,8 +115,8 @@ function Row(props) {
                   <Button variant="outlined" disabled>
                     Harvest
                   </Button>
-                </Grid>
-                <Grid xs alignItems="center">
+                </Grid>&nbsp; &nbsp; &nbsp; 
+                <Grid sm alignItems="center">
                   Earned
                   <br />
                   0.0000 BSW

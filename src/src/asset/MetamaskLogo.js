@@ -1,27 +1,28 @@
-import React from "react";
-import ModeViewer from '@metamask/logo';
+import React, { Component } from 'react';
+import ModelViewer from 'metamask-logo';
 
-class MetamaskLogo extends React.Component{
-    componentDidMount(){
-        this.viewer = ModeViewer({
-            pxNotRatio: true,
-            width: 150,
-            height: 150,
-            followMouse: true,
-        })
-        this.el.appendChild(this.viewer.container)
-    }
+class MetamaskLogo extends Component {
+  componentDidMount() {
+    this.viewer = ModelViewer({
+      pxNotRatio: true,
+      width: 200,
+      height: 200,
+      followMouse: true
+    });
+    this.el.appendChild(this.viewer.container);
+  }
 
-    componentWillUnnount(){
-        this.viewer.stopAnimation();
-    }
-    render(){
-        return (
-            <div
-            style={{top:'50%',left:'50%'}}
-            ref={el => (this.el = el)}
-            />
-        )
-    }
+  componentWillUnmount() {
+    this.viewer.stopAnimation();
+  }
+
+  render() {
+    return (
+      <div
+        ref={el => (this.el = el)}
+      />
+    );
+  }
 }
-export default MetamaskLogo
+
+export default MetamaskLogo;
