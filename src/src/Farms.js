@@ -62,112 +62,8 @@ export default function Farm() {
       backgroundColor: "#85F4FF",
     },
   }));
-  const Popup3 = (coin) => {
-    const [open, setOpen] = useState(false);
-    const Coin = coin.split("-");
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
 
-    const handleClose = () => {
-      setOpen(false);
-    };
-
-    function SimpleDialog(props) {
-
-      const { onClose, selectedValue, open } = props;
-      const handleClose = () => {
-        onClose(selectedValue);
-      };
-
-
-      return (
-        <Dialog onClose={handleClose} open={open} maxWidth="sm">
-          <DialogTitle style={{ textAlign: "center" }}>
-            <h2>Stack</h2>
-          </DialogTitle>
-          <Container style={{ textAlign: "center" }}>
-            <DialogContent>
-              <Card sx={{ maxWidth: 500 }}>
-                <CardContent>
-                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
-                    <TextField
-                      id="input-with-icon-textfield"
-                      label="From"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            {Coin[0]}
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="standard"
-                    />
-                  </FormControl>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      pt: 5,
-                      mt: 1,
-                      bgcolor: "background.paper",
-                      borderRadius: 1,
-                    }}
-                  >
-                    <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
-                  </Box>
-                  <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
-                    <TextField
-                      id="input-with-icon-textfield"
-                      label="To"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            {Coin[1]}
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="standard"
-                    />
-                  </FormControl>
-                </CardContent>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    p: 1,
-                    m: 1,
-                    bgcolor: "background.paper",
-                    borderRadius: 1,
-                  }}
-                >
-                  {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          Stack
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
-                </Box>
-              </Card>
-            </DialogContent>
-          </Container>
-        </Dialog>
-      );
-    }
-    return (
-      <div>
-        <Button variant="contained" onClick={handleClickOpen}>
-          Stack
-        </Button>
-        <SimpleDialog open={open} onClose={handleClose} />
-      </div>
-    );
-  };
-  const Popup4 = (name) => {
+  const Popup4 = (name,stake,color) => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -188,7 +84,7 @@ export default function Farm() {
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
           <DialogTitle style={{ textAlign: "center" }}>
-            <h2>UnStack</h2>
+            <h2>{stake}</h2>
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
@@ -197,7 +93,7 @@ export default function Farm() {
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
                       id="input-with-icon-textfield"
-                      label="From"
+                      label="LP Token Balance"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -221,7 +117,7 @@ export default function Farm() {
                     {Login ? (
                         <div>
                           <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          UnStack
+                          {stake}
                           </ColorButton>
                         </div>
                       ) : (
@@ -237,8 +133,8 @@ export default function Farm() {
     }
     return (
       <div>
-        <Button variant="contained" color="error" onClick={handleClickOpen}>
-          Unstake
+        <Button variant="contained" color={color} onClick={handleClickOpen}>
+          {stake}
         </Button>
         <SimpleDialog open={open} onClose={handleClose} />
       </div>
@@ -310,8 +206,8 @@ export default function Farm() {
                     >
                       {Login ? (
                         <div>
-                          {Popup3(row.name)}&nbsp;
-                          {Popup4(row.name)}
+                          {Popup4(row.name,'Stake','primary')}&nbsp;
+                          {Popup4(row.name,'UnStake','error')}
                         </div>
                       ) : (
                         <ConnectW />
