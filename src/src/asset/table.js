@@ -228,7 +228,9 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [Login] = React.useState(
+    JSON.parse(localStorage.getItem("StatusLogin"))
+  );
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -361,7 +363,15 @@ export default function EnhancedTable() {
                       borderRadius: 1,
                     }}
                   >
-                    <ConnectW/>
+                    {Login ? (
+                        <div>
+                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
+                          Stack
+                          </ColorButton>
+                        </div>
+                      ) : (
+                        <ConnectW />
+                      )}
                   </Box>
                 </Card>
            
@@ -445,7 +455,15 @@ export default function EnhancedTable() {
                         borderRadius: 1,
                       }}
                     >
-                      <ConnectW/>
+                      {Login ? (
+                        <div>
+                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
+                          Stack
+                          </ColorButton>
+                        </div>
+                      ) : (
+                        <ConnectW />
+                      )}
                     </Box>
                   </CardContent>
                 </Card>

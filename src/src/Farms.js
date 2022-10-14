@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -20,10 +20,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { ConnectW } from "../components/ConnectW";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SwapVerticalCircleIcon from "@mui/icons-material/SwapVerticalCircle";
+import { styled } from "@mui/material/styles";
+import { purple } from "@mui/material/colors";
 function createData(name, calories, fat, carbs, protein, price) {
   return {
     name,
@@ -35,105 +42,7 @@ function createData(name, calories, fat, carbs, protein, price) {
     history: [],
   };
 }
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  return (
-    <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit >
-            <Box sx={{ flexGrow: 1 , mt:1 }}>
-              <Grid container spacing={0}>
-                <Grid
-                  lg
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Button variant="outlined">Get LP</Button>
-                </Grid>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-                <Grid xs alignItems="center">
-                  Available
-                  <br />
-                  LP 0.0000 <br />
-                  LP $0.0000
-                </Grid>
-                <Grid sm alignItems="center">
-                  Staked LPs
-                  <br />
-                  LP 0.0000 <br />
-                </Grid>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-                <Grid
-                  sm
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ArrowForwardIosIcon />
-                </Grid>
-                <Grid
-                  sm
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ConnectW/>
-                </Grid>&nbsp; &nbsp; 
-                <Grid
-                  sm
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ArrowForwardIosIcon />
-                </Grid>&nbsp; &nbsp; 
-                <Grid
-                  sm
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Button variant="outlined" disabled>
-                    Harvest
-                  </Button>
-                </Grid>&nbsp; &nbsp; &nbsp; 
-                <Grid sm alignItems="center">
-                  Earned
-                  <br />
-                  0.0000 BSW
-                  <br />
-                  $0.0000
-                </Grid>
-              </Grid>
-            </Box  >
-            < Box sx={{ flexGrow: 1 , mt:1 }}>
-              
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
+
 const rows = [
   createData("USDT-BSW", 44.44, 36.76, 11531680, 0),
   createData("BNB-BSW", 37.65, 31.93, 7625131, 0),
@@ -143,6 +52,300 @@ const rows = [
 ];
 
 export default function Farm() {
+  const [Login] = React.useState(
+    JSON.parse(localStorage.getItem("StatusLogin"))
+  );
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: "#42C2FF",
+    "&:hover": {
+      backgroundColor: "#85F4FF",
+    },
+  }));
+  const Popup3 = (coin) => {
+    const [open, setOpen] = useState(false);
+    const Coin = coin.split("-");
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    function SimpleDialog(props) {
+
+      const { onClose, selectedValue, open } = props;
+      const handleClose = () => {
+        onClose(selectedValue);
+      };
+
+
+      return (
+        <Dialog onClose={handleClose} open={open} maxWidth="sm">
+          <DialogTitle style={{ textAlign: "center" }}>
+            <h2>Stack</h2>
+          </DialogTitle>
+          <Container style={{ textAlign: "center" }}>
+            <DialogContent>
+              <Card sx={{ maxWidth: 500 }}>
+                <CardContent>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="From"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            {Coin[0]}
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      pt: 5,
+                      mt: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
+                  </Box>
+                  <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="To"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            {Coin[1]}
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                </CardContent>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    p: 1,
+                    m: 1,
+                    bgcolor: "background.paper",
+                    borderRadius: 1,
+                  }}
+                >
+                  {Login ? (
+                        <div>
+                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
+                          Stack
+                          </ColorButton>
+                        </div>
+                      ) : (
+                        <ConnectW />
+                      )}
+                </Box>
+              </Card>
+            </DialogContent>
+          </Container>
+        </Dialog>
+      );
+    }
+    return (
+      <div>
+        <Button variant="contained" onClick={handleClickOpen}>
+          Stack
+        </Button>
+        <SimpleDialog open={open} onClose={handleClose} />
+      </div>
+    );
+  };
+  const Popup4 = (name) => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    function SimpleDialog(props) {
+     
+      const { onClose, selectedValue, open } = props;
+      const handleClose = () => {
+        onClose(selectedValue);
+      };
+
+      return (
+        <Dialog onClose={handleClose} open={open} maxWidth="sm">
+          <DialogTitle style={{ textAlign: "center" }}>
+            <h2>UnStack</h2>
+          </DialogTitle>
+          <Container style={{ textAlign: "center" }}>
+            <DialogContent>
+              <Card sx={{ maxWidth: 500 }}>
+                <CardContent>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="From"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            {name}
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      p: 1,
+                      m: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    {Login ? (
+                        <div>
+                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
+                          UnStack
+                          </ColorButton>
+                        </div>
+                      ) : (
+                        <ConnectW />
+                      )}
+                  </Box>
+                </CardContent>
+              </Card>
+            </DialogContent>
+          </Container>
+        </Dialog>
+      );
+    }
+    return (
+      <div>
+        <Button variant="contained" color="error" onClick={handleClickOpen}>
+          Unstake
+        </Button>
+        <SimpleDialog open={open} onClose={handleClose} />
+      </div>
+    );
+  };
+  function Row(props) {
+    const { row } = props;
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+      const coin = rows[0].name.split("-");
+      console.log(coin[0]);
+    };
+
+    return (
+      <React.Fragment>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.name}
+          </TableCell>
+          <TableCell align="right">{row.calories}</TableCell>
+          <TableCell align="right">{row.fat}</TableCell>
+          <TableCell align="right">{row.carbs}</TableCell>
+          <TableCell align="right">{row.protein}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ flexGrow: 1, mt: 1 }}>
+                <Grid container spacing={0}>
+                  <Grid
+                    md
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Button variant="outlined" onClick={() => handleClose()}>
+                      Get LP
+                    </Button>
+                  </Grid>
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  <Grid xs alignItems="center">
+                    Available
+                    <br />
+                    LP 0.0000 <br />
+                    LP $0.0000
+                  </Grid>
+                  <Grid sm alignItems="center">
+                    Staked LPs
+                    <br />
+                    LP 0.0000 <br />
+                  </Grid>
+                  &nbsp; &nbsp;
+                  <Box sx={{ flexGrow: 0 }}>
+                    <Grid
+                      md
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      {Login ? (
+                        <div>
+                          {Popup3(row.name)}&nbsp;
+                          {Popup4(row.name)}
+                        </div>
+                      ) : (
+                        <ConnectW />
+                      )}
+                    </Grid>{" "}
+                  </Box>
+                  &nbsp; &nbsp;
+                  <Grid
+                    sm
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Button variant="outlined" disabled>
+                      Harvest
+                    </Button>
+                  </Grid>
+                  &nbsp; &nbsp; &nbsp;
+                  <Grid sm alignItems="center">
+                    Earned
+                    <br />
+                    0.0000 BSW
+                    <br />
+                    $0.0000
+                  </Grid>
+                </Grid>
+              </Box>
+              <Box sx={{ flexGrow: 1, mt: 1 }}></Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
   return (
     <Box
       sx={{
@@ -171,7 +374,7 @@ export default function Farm() {
                     width: "auto",
                   }}
                 >
-                  <FormControl fullWidth sx={{ m: 1 , width: '210ch'}}>
+                  <FormControl fullWidth sx={{ m: 1, width: "210ch" }}>
                     <InputLabel htmlFor="outlined-adornment-amount">
                       Search by name,symbol,or address
                     </InputLabel>

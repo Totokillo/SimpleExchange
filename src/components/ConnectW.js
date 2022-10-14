@@ -9,57 +9,68 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 
 export const ConnectW = () => {
+  const [Login, setLogin] = useState(false);
+  const [open, setOpen] = useState(false);
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: "#42C2FF",
+    "&:hover": {
+      backgroundColor: "#85F4FF",
+    },
+  }));
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const [open, setOpen] = useState(false);
-    const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
-        backgroundColor: "#42C2FF",
-        "&:hover": {
-          backgroundColor: "#85F4FF",
-        },
-      }));
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleStatus = () => {
+    setLogin(true);
+    localStorage.setItem("StatusLogin", JSON.stringify(true));
+    setOpen(false);
+    window.location.reload(false);
+  };
+
+
+
+  function SimpleDialog(props) {
+    const { onClose, selectedValue, open } = props;
 
     const handleClose = () => {
-      setOpen(false);
+      onClose(selectedValue);
     };
 
-   
-    
-    function SimpleDialog(props) {
-      const { onClose, selectedValue, open } = props;
-
-      const handleClose = () => {
-        onClose(selectedValue);
-      };
-     
-
-      return (
-        
-        <Dialog onClose={handleClose} open={open}  >
-          <DialogTitle style={{ textAlign: "center" }}><h2>Connect Wallet</h2></DialogTitle>
-          <Container style={{ textAlign: "center" }}>
-            <DialogContent>
-              <Card  sx={{ maxWidth: 450 }}>     <h3> Metamask </h3>
-              <Button sx={{ minWidth: 150 }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" />
-              </Button>
-              </Card>
-            </DialogContent>
-          </Container>
-        </Dialog>
-      );
-    }
-    
     return (
-      <div>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle style={{ textAlign: "center" }}>
+          <h2>Connect Wallet</h2>
+        </DialogTitle>
+        <Container style={{ textAlign: "center" }}>
+          <DialogContent>
+            <Card sx={{ maxWidth: 450 }}>
+              {" "}
+              <h3> Metamask </h3>
+              <Button sx={{ minWidth: 150 }} onClick={() => handleStatus()}>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" />
+              </Button>
+            </Card>
+          </DialogContent>
+        </Container>
+      </Dialog>
+    );
+  }
+
+  return (
+    <div>
+    
         <ColorButton variant="contained" fullWidth onClick={handleClickOpen}>
           Connect Wallet
         </ColorButton>
-        
-        <SimpleDialog open={open} onClose={handleClose} />
-      </div>
-    );
-}
+      
+
+      <SimpleDialog open={open} onClose={handleClose} />
+    </div>
+  );
+};
