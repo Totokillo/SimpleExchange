@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import { createTheme, ThemeProvider} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { ConnectW } from "../components/ConnectW";
@@ -18,7 +18,9 @@ const pages = ["Swap", "Farms", "Pools"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [Login, setLogin] = React.useState(JSON.parse(localStorage.getItem("StatusLogin")));
+  const [Login, setLogin] = React.useState(
+    JSON.parse(localStorage.getItem("StatusLogin"))
+  );
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -30,7 +32,7 @@ const Header = () => {
   const customTheme = createTheme({
     palette: {
       secondary: {
-        main: "#85F4FF",
+        main: "#745C97",
         contrastText: "#00000",
       },
     },
@@ -151,14 +153,17 @@ const Header = () => {
               ))}
             </Box>
 
-            <Box sx={{ width: "auto", flexGrow: 0, justifyContent: "center" }}>{Login ? (
-        <ColorButton sx={{ minWidth: 150 }} onClick={() => handleStatusOut()}>
-          LogOut
-        </ColorButton>
-      ) : (
-        <ConnectW/>
-      )}
-             
+            <Box sx={{ width: "auto", flexGrow: 0, justifyContent: "center" }}>
+              {Login ? (
+                <ColorButton
+                  sx={{ minWidth: 150 }}
+                  onClick={() => handleStatusOut()}
+                >
+                  LogOut
+                </ColorButton>
+              ) : (
+                <ConnectW />
+              )}
             </Box>
           </Toolbar>
         </Container>

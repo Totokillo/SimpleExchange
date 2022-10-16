@@ -63,7 +63,7 @@ export default function Farm() {
     },
   }));
 
-  const Popup4 = (name,stake,color) => {
+  const Popup4 = (name, stake, color, label) => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -75,7 +75,6 @@ export default function Farm() {
     };
 
     function SimpleDialog(props) {
-     
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
         onClose(selectedValue);
@@ -93,7 +92,7 @@ export default function Farm() {
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
                       id="input-with-icon-textfield"
-                      label="LP Token Balance"
+                      label={label}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -115,14 +114,17 @@ export default function Farm() {
                     }}
                   >
                     {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
+                      <div>
+                        <ColorButton
+                          sx={{ minWidth: 150 }}
+                          onClick={() => handleClose()}
+                        >
                           {stake}
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
+                        </ColorButton>
+                      </div>
+                    ) : (
+                      <ConnectW />
+                    )}
                   </Box>
                 </CardContent>
               </Card>
@@ -140,6 +142,89 @@ export default function Farm() {
       </div>
     );
   };
+
+  const Popup5 = (stake, color, label) => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    function SimpleDialog(props) {
+      const { onClose, selectedValue, open } = props;
+      const handleClose = () => {
+        onClose(selectedValue);
+      };
+
+      return (
+        <Dialog onClose={handleClose} open={open} maxWidth="sm">
+          <DialogTitle style={{ textAlign: "center" }}>
+            <h2>{stake}</h2>
+          </DialogTitle>
+          <Container style={{ textAlign: "center" }}>
+            <DialogContent>
+              <Card sx={{ maxWidth: 500 }}>
+                <CardContent>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="outlined-basic"
+                      label={label}
+                      disabled={true}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">0.00</InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">ETC</InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      p: 1,
+                      m: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    {Login ? (
+                      <div>
+                        <ColorButton
+                          sx={{ minWidth: 150 }}
+                          onClick={() => handleClose()}
+                        >
+                          {stake}
+                        </ColorButton>
+                      </div>
+                    ) : (
+                      <ConnectW />
+                    )}
+                  </Box>
+                </CardContent>
+              </Card>
+            </DialogContent>
+          </Container>
+        </Dialog>
+      );
+    }
+    return (
+      <div>
+        <Button variant="contained" color={color} onClick={handleClickOpen}>
+          {stake}
+        </Button>
+        <SimpleDialog open={open} onClose={handleClose} />
+      </div>
+    );
+  };
+
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -206,8 +291,19 @@ export default function Farm() {
                     >
                       {Login ? (
                         <div>
-                          {Popup4(row.name,'Stake','primary')}&nbsp;
-                          {Popup4(row.name,'UnStake','error')}
+                          {Popup4(
+                            row.name,
+                            "Stake",
+                            "primary",
+                            "LP Token Available"
+                          )}
+                          &nbsp;
+                          {Popup4(
+                            row.name,
+                            "UnStake",
+                            "error",
+                            "Staked LP Tokens"
+                          )}
                         </div>
                       ) : (
                         <ConnectW />
@@ -221,17 +317,13 @@ export default function Farm() {
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <Button variant="outlined" disabled>
-                      Harvest
-                    </Button>
+                    {Popup5("Harvest", "success", "Claimable Reward")}
                   </Grid>
                   &nbsp; &nbsp; &nbsp;
                   <Grid sm alignItems="center">
                     Earned
                     <br />
-                    0.0000 BSW
-                    <br />
-                    $0.0000
+                    0.0000 ETC
                   </Grid>
                 </Grid>
               </Box>
@@ -246,7 +338,7 @@ export default function Farm() {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "#B8FFF9",
+        backgroundColor: "#371B58",
         flexGrow: 1,
         height: "820px",
         overflow: "auto",

@@ -32,7 +32,10 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import SwapVerticalCircleIcon from "@mui/icons-material/SwapVerticalCircle";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import CardContent from "@mui/material/CardContent";
 import { ConnectW } from "../../components/ConnectW";
 function createData(name, calories, fat, carbs, protein) {
@@ -275,26 +278,7 @@ export default function EnhancedTable() {
         transitionDuration: "0.3s",
         height: "12vw",
       };
-      const Root = styled(( theme ) => ({
-       Paper:{ 
-        [theme.breakpoints.down('sm')]: {
-          width: "20ch",
-          backgroundColor: "#EFFFFD",
-          justifyContent: "center",
-          p: 2,
-          display: "flex",
-          height: 150,
-       },[theme.breakpoints.down('md')]: {
-        width: "30ch",
-        backgroundColor: "#000",
-        justifyContent: "center",
-        p: 2,
-        display: "flex",
-        height: 350,
-     }
-        },
 
-      }));
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
           <DialogTitle style={{ textAlign: "center" }}>
@@ -302,79 +286,70 @@ export default function EnhancedTable() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-             
-                <Card sx={{ maxWidth: 500 }}>
-                  <CardContent>
-                    <FormControl
-                      sx={{ mt: 6, width: "35ch" }}
-                      variant="outlined"
-                    >
-                      <TextField
-                        id="input-with-icon-textfield"
-                        label="From"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              BTC
-                            </InputAdornment>
-                          ),
-                        }}
-                        variant="standard"
-                      />
-                    </FormControl>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        pt: 5,
-                        mt: 1,
-                        bgcolor: "background.paper",
-                        borderRadius: 1,
+              <Card sx={{ maxWidth: 500 }}>
+                <CardContent>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Input"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">BTC</InputAdornment>
+                        ),
                       }}
-                    >
-                      <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
-                    </Box>
-                    <FormControl
-                      sx={{ mt: 5, width: "35ch" }}
-                      variant="outlined"
-                    >
-                      <TextField
-                        id="input-with-icon-textfield"
-                        label="To"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              ETC
-                            </InputAdornment>
-                          ),
-                        }}
-                        variant="standard"
-                      />
-                    </FormControl>
-                  </CardContent>
-
+                      variant="standard"
+                    />
+                  </FormControl>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-                      p: 1,
-                      m: 1,
+                      pt: 5,
+                      mt: 1,
                       bgcolor: "background.paper",
                       borderRadius: 1,
                     }}
                   >
-                    {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          Stack
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
+                    <AddIcon sx={{ fontSize: 45 }} />
                   </Box>
-                </Card>
-           
+                  <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Input"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">ETC</InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                </CardContent>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    p: 1,
+                    m: 1,
+                    bgcolor: "background.paper",
+                    borderRadius: 1,
+                  }}
+                >
+                  {Login ? (
+                    <div>
+                      <ColorButton
+                        sx={{ minWidth: 150 }}
+                        onClick={() => handleClose()}
+                      >
+                        Add
+                      </ColorButton>
+                    </div>
+                  ) : (
+                    <ConnectW />
+                  )}
+                </Box>
+              </Card>
             </DialogContent>
           </Container>
         </Dialog>
@@ -391,7 +366,11 @@ export default function EnhancedTable() {
   };
   const Popup4 = () => {
     const [open, setOpen] = useState(false);
+    const [alignment, setAlignment] = React.useState("left");
 
+    const handleAlignment = (event, newAlignment) => {
+      setAlignment(newAlignment);
+    };
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -407,17 +386,11 @@ export default function EnhancedTable() {
       },
     }));
     function SimpleDialog(props) {
-      const [coins, setCoins] = useState([]);
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
         onClose(selectedValue);
       };
-      var cardStyle = {
-        display: "block",
-        width: "10vw",
-        transitionDuration: "0.3s",
-        height: "12vw",
-      };
+
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
           <DialogTitle style={{ textAlign: "center" }}>
@@ -425,49 +398,123 @@ export default function EnhancedTable() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-
-                <Card sx={{ maxWidth: 500 }}>
-                  <CardContent>
+              <Card sx={{ maxWidth: 500 }}>
+                <CardContent>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Your LP Tokens"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            BTC-ETC
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                  <br />
+                  <br />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      "& > :not(style) + :not(style)": { mt: 2 },
+                    }}
+                  >
+                    <ToggleButtonGroup
+                      value={alignment}
+                      exclusive
+                      onChange={handleAlignment}
+                      size="medium"
+                      fullWidth
+                      color="primary"
+                      aria-label="Large sizes"
+                    >
+                      <ToggleButton value="left" aria-label="Large sizes">
+                        25%
+                      </ToggleButton>
+                      <ToggleButton value="center" aria-label="centered">
+                        50%
+                      </ToggleButton>
+                      <ToggleButton value="right" aria-label="right aligned">
+                        70%
+                      </ToggleButton>
+                      <ToggleButton value="justify" aria-label="justified">
+                        MAX
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                    <ArrowDownwardIcon />
                     <FormControl
-                      sx={{ mt: 6, width: "35ch" }}
+                      sx={{
+                        width: "35ch",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
                       variant="outlined"
                     >
                       <TextField
-                        id="input-with-icon-textfield"
-                        label="From"
+                        id="outlined-basic"
+                        disabled={true}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              BTC-ETC
+                              0.00
                             </InputAdornment>
                           ),
+                          endAdornment: (
+                            <InputAdornment position="end">BTC</InputAdornment>
+                          ),
                         }}
-                        variant="standard"
+                        variant="outlined"
+                      />
+                      <AddIcon />
+                      <TextField
+                        id="outlined-basic"
+                        disabled={true}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              0.00
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">ETC</InputAdornment>
+                          ),
+                        }}
+                        variant="outlined"
                       />
                     </FormControl>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        p: 1,
-                        m: 1,
-                        bgcolor: "background.paper",
-                        borderRadius: 1,
-                      }}
-                    >
-                      {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          Stack
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
-                    </Box>
-                  </CardContent>
-                </Card>
-       
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      p: 1,
+                      m: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    {Login ? (
+                      <div>
+                        <ColorButton
+                          sx={{ minWidth: 150 }}
+                          onClick={() => handleClose()}
+                        >
+                          Remove
+                        </ColorButton>
+                      </div>
+                    ) : (
+                      <ConnectW />
+                    )}
+                  </Box>
+                </CardContent>
+              </Card>
             </DialogContent>
           </Container>
         </Dialog>
@@ -552,11 +599,10 @@ export default function EnhancedTable() {
                       <TableCell>
                         <Box sx={{ flexGrow: 1 }}>
                           <Grid container spacing={1}>
-                          
-                              {Popup3()}
-                            <br/>&nbsp;
-                              {Popup4()}
-                           
+                            {Popup3()}
+                            <br />
+                            &nbsp;
+                            {Popup4()}
                           </Grid>
                         </Box>
                       </TableCell>

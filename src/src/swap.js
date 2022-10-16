@@ -73,7 +73,7 @@ export default function Swap() {
     const handleClose = () => {
       setOpen(false);
     };
-    
+
     function SimpleDialog(props) {
       const [coins, setCoins] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -90,7 +90,6 @@ export default function Swap() {
 
       const handleListItemClick = (value) => {
         onClose(value);
- 
       };
       const fetchmarketCoins = async () => {
         setLoading(true);
@@ -117,7 +116,7 @@ export default function Swap() {
       const handleSelect = (value) => {
         setchartFE(false);
         localStorage.removeItem("id");
-        localStorage.setItem("id", JSON.stringify(value))
+        localStorage.setItem("id", JSON.stringify(value));
         setSelectcoin(value);
         fetchCoin(value);
         fetchChartCoin(value);
@@ -129,8 +128,7 @@ export default function Swap() {
       };
 
       return (
-        <Dialog onClose={handleClose} open={open} fullWidth
-        maxWidth="lg">
+        <Dialog onClose={handleClose} open={open} fullWidth maxWidth="lg">
           <DialogTitle>Choose Coin </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <TextField
@@ -140,95 +138,107 @@ export default function Swap() {
               onChange={(e) => setSearch(e.target.value)}
             />
             <TableContainer component={Paper}>
-            <Box sx={{ flexGrow: 1 }}>
-              {loading ? (
-                <LinearProgress style={{ backgroundColor: "gold" }} />
-              ) : (
-                <Table aria-label="simple table">
-                  <TableBody>
-                    {handleSearch()
-                      .slice((page - 1) * 9, (page - 1) * 9 + 9)
-                      .map((row) => {
-                        const profit = row.price_change_percentage_24h > 0;
-                        return ( 
-                   
-                          <Button
-                          onClick={() => handleSelect(row.id)}
-                          style={{maxWidth: '370px', maxHeight: '300px', minWidth: '370px', minHeight: '220px'}}variant="outlined"
-                        >
-                          <TableRow className={row} key={row.name}>
-                            <TableCell
-                              component="th"
-                              scope="row"
+              <Box sx={{ flexGrow: 1 }}>
+                {loading ? (
+                  <LinearProgress style={{ backgroundColor: "gold" }} />
+                ) : (
+                  <Table aria-label="simple table">
+                    <TableBody>
+                      {handleSearch()
+                        .slice((page - 1) * 9, (page - 1) * 9 + 9)
+                        .map((row) => {
+                          const profit = row.price_change_percentage_24h > 0;
+                          return (
+                            <Button
+                              onClick={() => handleSelect(row.id)}
                               style={{
-                                display: "flex",
-                                gap: 15,
+                                maxWidth: "370px",
+                                maxHeight: "300px",
+                                minWidth: "370px",
+                                minHeight: "220px",
                               }}
+                              variant="outlined"
                             >
-                              <img
-                                src={row?.image}
-                                alt={row.name}
-                                height="50"
-                                style={{ marginBottom: 10 }}
-                              />
-
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
-                                <span
+                              <TableRow className={row} key={row.name}>
+                                <TableCell
+                                  component="th"
+                                  scope="row"
                                   style={{
-                                    textTransform: "uppercase",
-                                    fontSize: 22,
+                                    display: "flex",
+                                    gap: 15,
                                   }}
                                 >
-                                  {row.symbol}
-                                </span>
-                                <span style={{ color: "darkgrey" }}>
-                                  {row.name}
-                                </span>
-                              </div>
-                            </TableCell>
-                            <TableCell align="right" style={{
-                                fontWeight: 500,
-                              }}>
-                              Price{" "}
-                              {numberWithCommas(
-                                row.current_price.toFixed(2)
-                              )}{" "}
-                              ฿
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              style={{
-                                color:
-                                  profit > 0 ? "rgb(14, 203, 129)" : "red",
-                                fontWeight: 500,
-                              }}
-                            >
-                              24h<br/>change{" "} {profit && "+"}
-                              {row.price_change_percentage_24h.toFixed(2)}%
-                            </TableCell>
-                            <TableCell align="right" style={{
-                                fontWeight: 500,
-                              }}>
-                              Market Cap{" "}
-                              {numberWithCommas(
-                                row.market_cap.toString().slice(0, -6)
-                              )}{" "}
-                              M
-                            </TableCell>
-                          </TableRow>
-                        </Button>
- 
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              )}
-                 </Box>
+                                  <img
+                                    src={row?.image}
+                                    alt={row.name}
+                                    height="50"
+                                    style={{ marginBottom: 10 }}
+                                  />
+
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        textTransform: "uppercase",
+                                        fontSize: 22,
+                                      }}
+                                    >
+                                      {row.symbol}
+                                    </span>
+                                    <span style={{ color: "darkgrey" }}>
+                                      {row.name}
+                                    </span>
+                                  </div>
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  style={{
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  Price{" "}
+                                  {numberWithCommas(
+                                    row.current_price.toFixed(2)
+                                  )}{" "}
+                                  ฿
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  style={{
+                                    color:
+                                      profit > 0 ? "rgb(14, 203, 129)" : "red",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  24h
+                                  <br />
+                                  change {profit && "+"}
+                                  {row.price_change_percentage_24h.toFixed(2)}%
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  style={{
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  Market Cap{" "}
+                                  {numberWithCommas(
+                                    row.market_cap.toString().slice(0, -6)
+                                  )}{" "}
+                                  M
+                                </TableCell>
+                              </TableRow>
+                            </Button>
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                )}
+              </Box>
             </TableContainer>
 
             {/* Comes from @material-ui/lab */}
@@ -269,7 +279,7 @@ export default function Swap() {
     <Box
       component="main"
       sx={{
-        backgroundColor: "#B8FFF9",
+        backgroundColor: "#000000",
         flexGrow: 1,
         height: "820px",
         overflow: "auto",
@@ -282,7 +292,7 @@ export default function Swap() {
           <Grid item xs={12} md={8} lg={7}>
             <Paper
               sx={{
-                backgroundColor: "#EFFFFD",
+                backgroundColor: "#371B58",
                 justifyContent: "center",
                 p: 2,
                 display: "flex",
@@ -290,7 +300,7 @@ export default function Swap() {
                 height: 550,
               }}
             >
-              <Card sx={{ maxWidth: "auto" }}>
+              <Card sx={{ backgroundColor: "#4C3575", maxWidth: "auto" }}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe">
