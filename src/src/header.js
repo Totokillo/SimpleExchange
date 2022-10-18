@@ -32,8 +32,8 @@ const Header = () => {
   const customTheme = createTheme({
     palette: {
       secondary: {
-        main: "#745C97",
-        contrastText: "#00000",
+        main: "#2E0249",
+        contrastText: "#FFFFF",
       },
     },
   });
@@ -56,7 +56,10 @@ const Header = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <CurrencyExchangeIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+              sx={{
+                display: { xs: "none", md: "flex", color: "white" },
+                mr: 1,
+              }}
             />
             <Typography
               variant="h6"
@@ -69,7 +72,7 @@ const Header = () => {
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "white",
                 textDecoration: "none",
               }}
             >
@@ -101,16 +104,14 @@ const Header = () => {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
+                sx={{ display: { xs: "block", md: "none" } }}
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu} href={page}>
                     <Button
                       key={page}
                       onClick={handleCloseNavMenu}
-                      sx={{ my: 1, color: "#000000", display: "block" }}
+                      sx={{ my: 1, display: "block" }}
                       href={page}
                     >
                       <Typography textAlign="center">{page}</Typography>
@@ -120,7 +121,10 @@ const Header = () => {
               </Menu>
             </Box>
             <CurrencyExchangeIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              sx={{
+                display: { xs: "flex", md: "none", color: "white" },
+                mr: 1,
+              }}
             />
             <Typography
               variant="h5"
@@ -134,7 +138,7 @@ const Header = () => {
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "white",
                 textDecoration: "none",
               }}
             >
@@ -145,7 +149,7 @@ const Header = () => {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 3, color: "#000000", display: "block" }}
+                  sx={{ my: 3, color: "white", display: "block" }}
                   href={page}
                 >
                   {page}

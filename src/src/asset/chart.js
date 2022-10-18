@@ -42,9 +42,13 @@ function Chart() {
 
   const options = {
     legend: {
-      labels: {
-        fontColor: "white",
-        fontSize: 18,
+      display: false,
+    },
+    tooltips: {
+      callbacks: {
+        label: function (tooltipItem) {
+          return tooltipItem.yLabel;
+        },
       },
     },
     scales: {
@@ -83,7 +87,7 @@ function Chart() {
     ),
     datasets: [
       {
-        label: id,
+        label: "",
         fill: true,
         data: coinCharData.map((val) => val.y),
         borderColor: "rgb(66, 194, 255)",

@@ -14,7 +14,7 @@ export default function Footer() {
   const customTheme = createTheme({
     palette: {
       duio: {
-        main: "#745C97",
+        main: "#000000",
         contrastText: "#e8e0e0 ",
       },
       secondary: {

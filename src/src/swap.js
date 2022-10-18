@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
+import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
-import SwapVerticalCircleIcon from "@mui/icons-material/SwapVerticalCircle";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 import Button from "@mui/material/Button";
 import { purple } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
@@ -24,12 +24,20 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import LinearProgress from "@mui/material/LinearProgress";
 import Pagination from "@mui/material/Pagination";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
+import Typography from "@mui/material/Typography";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+const theme = createTheme({
+  typography: {
+    body1: {
+      color: "#FFFFFF",
+    },
+  },
+});
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -262,13 +270,17 @@ export default function Swap() {
     return (
       <div>
         <IconButton onClick={handleClickOpen} sx={{ p: 0 }}>
-          <Avatar aria-label="recipe" sx={{ width: 24, height: 24 }}>
+          <Avatar
+            aria-label="recipe"
+            sx={{ bgcolor: "#FFFFFF", width: 24, height: 24 }}
+          >
             {Selectcoin ? (
               <img src={coin?.image.thumb} loading="lazy" />
             ) : (
-              <CurrencyExchangeIcon />
+              <CurrencyExchangeIcon sx={{ color: "#000" }} />
             )}
-          </Avatar>
+          </Avatar>{" "}
+          <ArrowDropDownIcon sx={{ color: "#000" }} />
         </IconButton>
         <SimpleDialog open={open} onClose={handleClose} />
       </div>
@@ -292,7 +304,7 @@ export default function Swap() {
           <Grid item xs={12} md={8} lg={7}>
             <Paper
               sx={{
-                backgroundColor: "#371B58",
+                backgroundColor: "#000000",
                 justifyContent: "center",
                 p: 2,
                 display: "flex",
@@ -300,23 +312,37 @@ export default function Swap() {
                 height: 550,
               }}
             >
-              <Card sx={{ backgroundColor: "#4C3575", maxWidth: "auto" }}>
+              <Card sx={{ backgroundColor: "#2E0249", maxWidth: "auto" }}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="recipe">
+                    <Avatar aria-label="recipe" sx={{ bgcolor: "#FFFFFF" }}>
                       {coin?.image.small ? (
                         <img
                           src={`${coin?.image.small}`}
                           loading="lazy"
                           sx={{ width: 50, height: 50 }}
                         />
-                      ) : null}
+                      ) : (
+                        <CurrencyExchangeIcon sx={{ color: "#000" }} />
+                      )}
                     </Avatar>
                   }
-                  title={coin2 ? coin?.name : null}
+                  title={
+                    <ThemeProvider theme={theme}>
+                      <Typography variant="body1">
+                        {coin2 ? coin?.name : null}
+                      </Typography>
+                    </ThemeProvider>
+                  }
                 />
                 <CardContent>
-                  {chartFE ? <Chart /> : <div>Loading....</div>}
+                  {chartFE ? (
+                    <Chart />
+                  ) : (
+                    <ThemeProvider theme={theme}>
+                      <Typography variant="body1">Loading....</Typography>
+                    </ThemeProvider>
+                  )}
                 </CardContent>
               </Card>
             </Paper>
@@ -326,21 +352,25 @@ export default function Swap() {
             <Paper
               sx={{
                 width: "40ch",
-                backgroundColor: "#EFFFFD",
+                backgroundColor: "black",
                 justifyContent: "center",
                 p: 2,
                 display: "flex",
                 height: 550,
               }}
             >
-              <Card sx={{ maxWidth: 500 }}>
+              <Card
+                sx={{
+                  maxWidth: 500,
+                }}
+              >
                 <CardHeader title="Swap" />
 
                 <CardContent>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
                       id="input-with-icon-textfield"
-                      label="From"
+                      label={<Typography variant="h6">From</Typography>}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -355,18 +385,18 @@ export default function Swap() {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-                      pt: 5,
-                      mt: 1,
-                      bgcolor: "background.paper",
+                      pt: 0,
+                      mt: 3,
+                      bgcolor: "#2E0249",
                       borderRadius: 1,
                     }}
                   >
-                    <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
+                    <SwapVertIcon sx={{ fontSize: 40, color: "white" }} />
                   </Box>
                   <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
                     <TextField
                       id="input-with-icon-textfield"
-                      label="To"
+                      label={<Typography variant="h6">To</Typography>}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
