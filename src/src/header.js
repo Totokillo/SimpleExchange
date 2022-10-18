@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { ConnectW } from "../components/ConnectW";
+import { Paper } from "@mui/material";
 const pages = ["Swap", "Farms", "Pools"];
 
 const Header = () => {
@@ -88,7 +89,7 @@ const Header = () => {
                 onClick={handleOpenNavMenu}
                 color="inherit"
               >
-                <MenuIcon />
+                <MenuIcon sx={{ color: "#ffffff" }} />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -111,7 +112,10 @@ const Header = () => {
                     <Button
                       key={page}
                       onClick={handleCloseNavMenu}
-                      sx={{ my: 1, display: "block" }}
+                      sx={{
+                        my: 1,
+                        display: "block",
+                      }}
                       href={page}
                     >
                       <Typography textAlign="center">{page}</Typography>

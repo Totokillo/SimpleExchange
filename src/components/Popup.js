@@ -27,6 +27,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Pagination from "@mui/material/Pagination";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Box from "@mui/material/Box";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -228,14 +229,15 @@ export default function Popup() {
       <IconButton onClick={handleClickOpen} sx={{ p: 0 }}>
         <Avatar
           aria-label="recipe"
-          sx={{ bgcolor: "#FFFFFF", width: 24, height: 24 }}
+          sx={{ bgcolor: "#371B58", width: 24, height: 24 }}
         >
           {Selectcoin ? (
             <img src={coin?.image.thumb} loading="lazy" />
           ) : (
-            <CurrencyExchangeIcon sx={{ color: "#000" }} />
+            <CurrencyExchangeIcon sx={{ color: "#FFFFFF" }} />
           )}
-        </Avatar>
+        </Avatar>{" "}
+        <ArrowDropDownIcon sx={{ color: "#FFFFFF" }} />
       </IconButton>
       <SimpleDialog open={open} onClose={handleClose} />
     </div>

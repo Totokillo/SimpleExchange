@@ -36,9 +36,18 @@ const theme = createTheme({
     body1: {
       color: "#FFFFFF",
     },
+    h4: {
+      color: "#FFFFFF",
+    },
   },
 });
-
+const customTextF = createTheme({
+  palette: {
+    secondary: {
+      main: "#FFFFFF",
+    },
+  },
+});
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
   backgroundColor: "#42C2FF",
@@ -272,15 +281,15 @@ export default function Swap() {
         <IconButton onClick={handleClickOpen} sx={{ p: 0 }}>
           <Avatar
             aria-label="recipe"
-            sx={{ bgcolor: "#FFFFFF", width: 24, height: 24 }}
+            sx={{ bgcolor: "#371B58", width: 24, height: 24 }}
           >
             {Selectcoin ? (
               <img src={coin?.image.thumb} loading="lazy" />
             ) : (
-              <CurrencyExchangeIcon sx={{ color: "#000" }} />
+              <CurrencyExchangeIcon sx={{ color: "#FFFFFF" }} />
             )}
           </Avatar>{" "}
-          <ArrowDropDownIcon sx={{ color: "#000" }} />
+          <ArrowDropDownIcon sx={{ color: "#FFFFFF" }} />
         </IconButton>
         <SimpleDialog open={open} onClose={handleClose} />
       </div>
@@ -291,7 +300,7 @@ export default function Swap() {
     <Box
       component="main"
       sx={{
-        backgroundColor: "#000000",
+        backgroundColor: "#371B58",
         flexGrow: 1,
         height: "820px",
         overflow: "auto",
@@ -299,12 +308,28 @@ export default function Swap() {
     >
       <Toolbar />
       <Container maxWidth="lg" sx={{ justifyContent: "center" }}>
+        <Grid item xs={12} md={8} lg={5}>
+          <Paper
+            elevation={0}
+            maxWidth
+            sx={{
+              backgroundColor: "#2E0249",
+              justifyContent: "center",
+              p: 2,
+              display: "flex",
+              height: 50,
+            }}
+          >
+            
+          </Paper>
+        </Grid>
         <Grid container spacing={3}>
           {/* Chart */}
-          <Grid item xs={12} md={8} lg={7}>
+          <Grid item xs={12} md={7} lg={7}>
             <Paper
+              elevation={0}
               sx={{
-                backgroundColor: "#000000",
+                backgroundColor: "#371B58",
                 justifyContent: "center",
                 p: 2,
                 display: "flex",
@@ -315,7 +340,7 @@ export default function Swap() {
               <Card sx={{ backgroundColor: "#2E0249", maxWidth: "auto" }}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="recipe" sx={{ bgcolor: "#FFFFFF" }}>
+                    <Avatar aria-label="recipe" sx={{ bgcolor: "#2E0249" }}>
                       {coin?.image.small ? (
                         <img
                           src={`${coin?.image.small}`}
@@ -323,7 +348,7 @@ export default function Swap() {
                           sx={{ width: 50, height: 50 }}
                         />
                       ) : (
-                        <CurrencyExchangeIcon sx={{ color: "#000" }} />
+                        <CurrencyExchangeIcon sx={{ color: "#FFFFFF" }} />
                       )}
                     </Avatar>
                   }
@@ -348,38 +373,56 @@ export default function Swap() {
             </Paper>
           </Grid>
           {/* Recent Deposits */}
-          <Grid item xs={12} md={8} lg={5}>
+          <Grid item xs={12} md={5} lg={5} alignItems="center" justify="center">
             <Paper
+              elevation={0}
               sx={{
                 width: "40ch",
-                backgroundColor: "black",
+                backgroundColor: "#371B58",
                 justifyContent: "center",
                 p: 2,
                 display: "flex",
-                height: 550,
+                height: 500,
               }}
             >
               <Card
                 sx={{
                   maxWidth: 500,
+                  backgroundColor: "#2E0249",
                 }}
               >
-                <CardHeader title="Swap" />
-
-                <CardContent>
-                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
-                    <TextField
-                      id="input-with-icon-textfield"
-                      label={<Typography variant="h6">From</Typography>}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            {Popup1()}
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="standard"
-                    />
+                <CardHeader
+                  title={
+                    <ThemeProvider theme={theme}>
+                      <Typography variant="h4">Swap</Typography>
+                    </ThemeProvider>
+                  }
+                />
+                <CardContent sx={{ bgcolor: "#2E0249" }}>
+                  <FormControl
+                    sx={{ mt: 6, width: "35ch", bgcolor: "#2E0249" }}
+                    variant="outlined"
+                  >
+                    {" "}
+                    <ThemeProvider theme={customTextF}>
+                      <TextField
+                        id="input-with-icon-textfield"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              {Popup1()}
+                            </InputAdornment>
+                          ),
+                          inputmode: "numeric",
+                          pattern: "[0-9]*",
+                        }}
+                        variant="outlined"
+                        sx={{ input: { color: "white" } }}
+                        color="secondary"
+                        focused
+                        type="number"
+                      />
+                    </ThemeProvider>
                   </FormControl>
                   <Box
                     sx={{
@@ -394,18 +437,23 @@ export default function Swap() {
                     <SwapVertIcon sx={{ fontSize: 40, color: "white" }} />
                   </Box>
                   <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
-                    <TextField
-                      id="input-with-icon-textfield"
-                      label={<Typography variant="h6">To</Typography>}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Popup />
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="standard"
-                    />
+                    <ThemeProvider theme={customTextF}>
+                      <TextField
+                        id="input-with-icon-textfield"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Popup />
+                            </InputAdornment>
+                          ),
+                        }}
+                        variant="outlined"
+                        sx={{ input: { color: "white" } }}
+                        color="secondary"
+                        focused
+                        type="number"
+                      />
+                    </ThemeProvider>
                   </FormControl>
                 </CardContent>
 
@@ -415,7 +463,7 @@ export default function Swap() {
                     justifyContent: "center",
                     p: 1,
                     m: 1,
-                    bgcolor: "background.paper",
+                    bgcolor: "#2E0249",
                     borderRadius: 1,
                   }}
                 >

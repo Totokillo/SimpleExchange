@@ -33,8 +33,6 @@ export const ConnectW = () => {
     window.location.reload(false);
   };
 
-
-
   function SimpleDialog(props) {
     const { onClose, selectedValue, open } = props;
 
@@ -49,7 +47,7 @@ export const ConnectW = () => {
         </DialogTitle>
         <Container style={{ textAlign: "center" }}>
           <DialogContent>
-            <Card sx={{ maxWidth: 450 }}>
+            <Card sx={{ maxWidth: 450 }} variant="outlined">
               {" "}
               <h3> Metamask </h3>
               <Button sx={{ minWidth: 150 }} onClick={() => handleStatus()}>
@@ -64,11 +62,9 @@ export const ConnectW = () => {
 
   return (
     <div>
-    
-        <ColorButton variant="contained" fullWidth onClick={handleClickOpen}>
-          Connect Wallet
-        </ColorButton>
-      
+      <ColorButton variant="contained" fullWidth onClick={handleClickOpen}>
+        Connect Wallet
+      </ColorButton>
 
       <SimpleDialog open={open} onClose={handleClose} />
     </div>

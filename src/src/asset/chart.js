@@ -41,9 +41,6 @@ function Chart() {
   }));
 
   const options = {
-    legend: {
-      display: false,
-    },
     tooltips: {
       callbacks: {
         label: function (tooltipItem) {
@@ -73,6 +70,9 @@ function Chart() {
       title: {
         display: true,
       },
+      legend: {
+        display: false,
+      },
     },
     elements: {
       point: {
@@ -82,16 +82,13 @@ function Chart() {
   };
 
   const data = {
-    labels: coinCharData.map((value) =>
-      moment(value.x).startOf("hour").fromNow()
-    ),
+    labels: coinCharData.map((value) => moment(value.x).format("L")),
     datasets: [
       {
         label: "",
         fill: true,
         data: coinCharData.map((val) => val.y),
         borderColor: "rgb(66, 194, 255)",
-        backgroundColor: "rgb(184, 255, 249,0.5)",
       },
     ],
   };

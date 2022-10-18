@@ -87,7 +87,7 @@ export default function Farm() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-              <Card sx={{ maxWidth: 500 }}>
+              <Card sx={{ maxWidth: 500 }} variant="outlined">
                 <CardContent>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
@@ -167,7 +167,7 @@ export default function Farm() {
           </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-              <Card sx={{ maxWidth: 500 }}>
+              <Card sx={{ maxWidth: 500 }} variant="outlined">
                 <CardContent>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
