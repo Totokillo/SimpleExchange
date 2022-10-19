@@ -303,7 +303,7 @@ export default function EnhancedTable() {
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
              
-                <Card sx={{ maxWidth: 500 }}>
+            <Card sx={{ maxWidth: 500 }} variant="outlined">
                   <CardContent>
                     <FormControl
                       sx={{ mt: 6, width: "35ch" }}
@@ -311,7 +311,7 @@ export default function EnhancedTable() {
                     >
                       <TextField
                         id="input-with-icon-textfield"
-                        label="From"
+                        label="Input                 Balance 0"
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -340,7 +340,7 @@ export default function EnhancedTable() {
                     >
                       <TextField
                         id="input-with-icon-textfield"
-                        label="To"
+                        label="Input"
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -426,7 +426,7 @@ export default function EnhancedTable() {
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
 
-                <Card sx={{ maxWidth: 500 }}>
+            <Card sx={{ maxWidth: 500 }} variant="outlined">
                   <CardContent>
                     <FormControl
                       sx={{ mt: 6, width: "35ch" }}

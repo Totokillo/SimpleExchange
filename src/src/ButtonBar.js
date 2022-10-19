@@ -10,12 +10,15 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Fab from "@mui/material/Fab";
 
-export default function Foolter() {
+export default function Footer() {
   const customTheme = createTheme({
     palette: {
       duio: {
-        main: "#85F4FF",
+        main: "#2E0249",
         contrastText: "#e8e0e0 ",
+      },
+      secondary: {
+        main: "#4C3575",
       },
     },
   });
@@ -45,7 +48,7 @@ export default function Foolter() {
             <div className="container">
               <div className="row ">
                 <div className="col">
-                  <Fab color="primary" aria-label="add">
+                  <Fab color="secondary" aria-label="add">
                     <YouTubeIcon />
                   </Fab>
                 </div>
@@ -55,7 +58,7 @@ export default function Foolter() {
             <div className="container">
               <div className="row ">
                 <div className="col ">
-                  <Fab color="primary" aria-label="add">
+                  <Fab color="secondary" aria-label="add">
                     <TwitterIcon />
                   </Fab>
                 </div>
@@ -65,7 +68,7 @@ export default function Foolter() {
             <div className="container">
               <div className="row ">
                 <div className="col ">
-                  <Fab color="primary" aria-label="add">
+                  <Fab color="secondary" aria-label="add">
                     <FacebookIcon />
                   </Fab>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
-
+import Alert from "@mui/material/Alert";
 export const ConnectW = () => {
   const [Login, setLogin] = useState(false);
   const [open, setOpen] = useState(false);
@@ -29,11 +29,10 @@ export const ConnectW = () => {
   const handleStatus = () => {
     setLogin(true);
     localStorage.setItem("StatusLogin", JSON.stringify(true));
+    localStorage.setItem("StatusAlert", JSON.stringify(true));
     setOpen(false);
     window.location.reload(false);
   };
-
-
 
   function SimpleDialog(props) {
     const { onClose, selectedValue, open } = props;
@@ -49,7 +48,7 @@ export const ConnectW = () => {
         </DialogTitle>
         <Container style={{ textAlign: "center" }}>
           <DialogContent>
-            <Card sx={{ maxWidth: 450 }}>
+            <Card sx={{ maxWidth: 450 }} variant="outlined">
               {" "}
               <h3> Metamask </h3>
               <Button sx={{ minWidth: 150 }} onClick={() => handleStatus()}>
@@ -64,11 +63,9 @@ export const ConnectW = () => {
 
   return (
     <div>
-    
-        <ColorButton variant="contained" fullWidth onClick={handleClickOpen}>
-          Connect Wallet
-        </ColorButton>
-      
+      <ColorButton variant="contained" fullWidth onClick={handleClickOpen}>
+        Connect Wallet
+      </ColorButton>
 
       <SimpleDialog open={open} onClose={handleClose} />
     </div>

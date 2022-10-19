@@ -13,12 +13,11 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
 export default function Pool() {
-  
   return (
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "#B8FFF9",
+        backgroundColor: "#371B58",
         flexGrow: 1,
         height: "820px",
         overflow: "auto",
@@ -38,28 +37,25 @@ export default function Pool() {
           <Card sx={{ minWidth: "auto" }}>
             <CardContent>
               <Grid container spacing={0}>
-                
-                  <FormControl fullWidth sx={{ m: 1 , width: '210ch'}}>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      Search 
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-amount"
-                      startAdornment={
-                        <SearchIcon
-                          sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                        />
-                      }
-                      label=" Search "
-                    />
-                  </FormControl>
-                
-                </Grid>
+                <FormControl fullWidth sx={{ m: 1, width: "210ch" }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Search
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={
+                      <SearchIcon
+                        sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                      />
+                    }
+                    label=" Search "
+                  />
+                </FormControl>
+              </Grid>
             </CardContent>
           </Card>
           <Grid container spacing={0}>
-                <EnhancedTable/>
-
+            <EnhancedTable />
           </Grid>
         </Stack>
       </Container>
