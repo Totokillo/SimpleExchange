@@ -23,14 +23,15 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { ConnectW } from "../components/ConnectW";
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import SwapVerticalCircleIcon from "@mui/icons-material/SwapVerticalCircle";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
+import Alert from "@mui/material/Alert";
 function createData(name, calories, fat, carbs, protein, price) {
   return {
     name,
@@ -42,7 +43,9 @@ function createData(name, calories, fat, carbs, protein, price) {
     history: [],
   };
 }
-
+function TransitionLeft(props) {
+  return <Slide {...props} direction="right" />;
+}
 const rows = [
   createData("USDT-BSW", 44.44, 36.76, 11531680, 0),
   createData("BNB-BSW", 37.65, 31.93, 7625131, 0),
@@ -62,10 +65,25 @@ export default function Farm() {
       backgroundColor: "#85F4FF",
     },
   }));
+  const ColorButton2 = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: "#C21010",
+    "&:hover": {
+      backgroundColor: "#E64848",
+    },
+  }));
+  const ColorButton3 = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: "#2B7A0B",
+    "&:hover": {
+      backgroundColor: "#7DCE13",
+    },
+  }));
 
-  const Popup4 = (name, stake, color, label) => {
+  const Popup4 = (name, stake, color, label, colors) => {
     const [open, setOpen] = useState(false);
-
+    const [alerts, setAlert] = useState(false);
+    const [transition, setTransition] = React.useState(undefined);
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -73,7 +91,15 @@ export default function Farm() {
     const handleClose = () => {
       setOpen(false);
     };
-
+    const handleClick = (Transition) => {
+      setTransition(() => Transition);
+      setAlert(true);setOpen(false)
+    };
+  
+    const Closes = () => {
+  
+      setAlert(false);
+    };
     function SimpleDialog(props) {
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
@@ -82,13 +108,12 @@ export default function Farm() {
 
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
-          <DialogTitle style={{ textAlign: "center" }}>
-            <h2>{stake}</h2>
-          </DialogTitle>
+
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
               <Card sx={{ maxWidth: 500 }} variant="outlined">
                 <CardContent>
+                <h2>{stake}</h2>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
                       id="input-with-icon-textfield"
@@ -114,14 +139,25 @@ export default function Farm() {
                     }}
                   >
                     {Login ? (
-                      <div>
-                        <ColorButton
-                          sx={{ minWidth: 150 }}
-                          onClick={() => handleClose()}
-                        >
-                          {stake}
-                        </ColorButton>
-                      </div>
+                      colors == 1 ? (
+                        <div>
+                          <ColorButton
+                            sx={{ minWidth: 150 }}
+                            onClick={() => handleClick(TransitionLeft)}
+                          >
+                            {stake}
+                          </ColorButton>
+                        </div>
+                      ) : (
+                        <div>
+                          <ColorButton2
+                            sx={{ minWidth: 150 }}
+                            onClick={() => handleClick(TransitionLeft)}
+                          >
+                            {stake}
+                          </ColorButton2>
+                        </div>
+                      )
                     ) : (
                       <ConnectW />
                     )}
@@ -133,18 +169,54 @@ export default function Farm() {
         </Dialog>
       );
     }
-    return (
+    return colors == 1 ? (
       <div>
-        <Button variant="contained" color={color} onClick={handleClickOpen}>
+        <ColorButton
+          variant="contained"
+          color={color}
+          onClick={handleClickOpen}
+        >
           {stake}
-        </Button>
-        <SimpleDialog open={open} onClose={handleClose} />
+        </ColorButton>
+        <SimpleDialog open={open} onClose={handleClose} />  <Snackbar
+     
+     open={alerts}
+     onClose={Closes}
+     autoHideDuration={1000}
+     TransitionComponent={transition}
+     key={transition ? transition.name : ''}
+   >
+     <Alert severity="success"> {stake} Success</Alert>
+   </Snackbar>
+      </div>
+    ) : (
+      <div>
+        <ColorButton2
+          variant="contained"
+          color={color}
+          onClick={handleClickOpen}
+        >
+          {stake}
+        </ColorButton2>
+        <SimpleDialog open={open} onClose={handleClose} />  <Snackbar
+     
+     open={alerts}
+     onClose={Closes}
+     autoHideDuration={1000}
+     TransitionComponent={transition}
+     key={transition ? transition.name : ''}
+   >
+     <Alert severity="error"> {stake} Success</Alert>
+   </Snackbar>
+      
       </div>
     );
   };
 
   const Popup5 = (stake, color, label) => {
     const [open, setOpen] = useState(false);
+    const [alerts, setAlert] = useState(false);
+    const [transition, setTransition] = React.useState(undefined);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -154,21 +226,29 @@ export default function Farm() {
       setOpen(false);
     };
 
+    const handleClick = (Transition) => {
+      setTransition(() => Transition);
+      setAlert(true);setOpen(false)
+    };
+  
+    const Closes = () => {
+      setAlert(false);
+    };
     function SimpleDialog(props) {
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
         onClose(selectedValue);
       };
 
+    
+
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
-          <DialogTitle style={{ textAlign: "center" }}>
-            <h2>{stake}</h2>
-          </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
               <Card sx={{ maxWidth: 500 }} variant="outlined">
                 <CardContent>
+                <h2>{stake}</h2>
                   <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
                     <TextField
                       id="outlined-basic"
@@ -197,12 +277,12 @@ export default function Farm() {
                   >
                     {Login ? (
                       <div>
-                        <ColorButton
+                        <ColorButton3
                           sx={{ minWidth: 150 }}
-                          onClick={() => handleClose()}
+                          onClick={() => handleClick(TransitionLeft)}
                         >
                           {stake}
-                        </ColorButton>
+                        </ColorButton3>
                       </div>
                     ) : (
                       <ConnectW />
@@ -217,10 +297,24 @@ export default function Farm() {
     }
     return (
       <div>
-        <Button variant="contained" color={color} onClick={handleClickOpen}>
+        <ColorButton3
+          variant="contained"
+          color={color}
+          onClick={handleClickOpen}
+        >
           {stake}
-        </Button>
+        </ColorButton3>
         <SimpleDialog open={open} onClose={handleClose} />
+        <Snackbar
+     
+     open={alerts}
+     onClose={Closes}
+     autoHideDuration={1000}
+     TransitionComponent={transition}
+     key={transition ? transition.name : ''}
+   >
+     <Alert severity="success"> {stake} Success</Alert>
+   </Snackbar>
       </div>
     );
   };
@@ -265,7 +359,7 @@ export default function Farm() {
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <Button variant="outlined" onClick={() => handleClose()}>
+                    <Button variant="outlined" href={"Pools"}>
                       Get LP
                     </Button>
                   </Grid>
@@ -295,14 +389,16 @@ export default function Farm() {
                             row.name,
                             "Stake",
                             "primary",
-                            "LP Token Available"
+                            "LP Token Available",
+                            1
                           )}
                           &nbsp;
                           {Popup4(
                             row.name,
                             "UnStake",
                             "error",
-                            "Staked LP Tokens"
+                            "Staked LP Tokens",
+                            2
                           )}
                         </div>
                       ) : (
@@ -346,6 +442,7 @@ export default function Farm() {
     >
       <Container maxWidth="auto">
         <Stack spacing>
+          <br />
           <Card sx={{ minWidth: "auto" }}>
             <CardContent>
               <Typography sx={{ fontSize: 30 }}>Farms</Typography>
@@ -355,28 +452,20 @@ export default function Farm() {
           <Card sx={{ minWidth: "auto" }}>
             <CardContent>
               <Grid container spacing={0}>
-                <Box
-                  component="form"
-                  sx={{
-                    m: 1,
-                    width: "auto",
-                  }}
-                >
-                  <FormControl fullWidth sx={{ m: 1, width: "210ch" }}>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      Search by name,symbol,or address
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-amount"
-                      startAdornment={
-                        <SearchIcon
-                          sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                        />
-                      }
-                      label=" Search by name,symbol,or address"
-                    />
-                  </FormControl>
-                </Box>
+                <FormControl fullWidth sx={{ m: 1, width: "210ch" }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Search by name,symbol,or address
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={
+                      <SearchIcon
+                        sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                      />
+                    }
+                    label=" Search by name,symbol,or address"
+                  />
+                </FormControl>
               </Grid>
             </CardContent>
           </Card>
@@ -401,6 +490,7 @@ export default function Farm() {
               </Table>
             </TableContainer>
           </Grid>
+          <br />
         </Stack>
       </Container>
     </Box>

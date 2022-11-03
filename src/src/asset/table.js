@@ -13,17 +13,15 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Container from "@mui/material/Container";
@@ -32,9 +30,16 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import SwapVerticalCircleIcon from "@mui/icons-material/SwapVerticalCircle";
 import CardContent from "@mui/material/CardContent";
 import { ConnectW } from "../../components/ConnectW";
+import AddIcon from "@mui/icons-material/Add";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
+import Alert from "@mui/material/Alert";
 function createData(name, calories, fat, carbs, protein) {
   return {
     name,
@@ -44,6 +49,9 @@ function createData(name, calories, fat, carbs, protein) {
     protein,
   };
 }
+    function TransitionLeft(props) {
+      return <Slide {...props} direction="right" />;
+    }
 
 const rows = [
   createData("BTC-ETC", 0, 0, 0),
@@ -116,11 +124,8 @@ const headCells = [
 
 function EnhancedTableHead(props) {
   const {
-    onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
     onRequestSort,
   } = props;
   const createSortHandler = (property) => (event) => {
@@ -228,6 +233,11 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [alignment, setAlignment] = React.useState("left");
+
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
   const [Login] = React.useState(
     JSON.parse(localStorage.getItem("StatusLogin"))
   );
@@ -248,6 +258,8 @@ export default function EnhancedTable() {
 
   const Popup3 = () => {
     const [open, setOpen] = useState(false);
+    const [alerts, setAlert] = useState(false);
+    const [transition, setTransition] = React.useState(undefined);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -263,96 +275,256 @@ export default function EnhancedTable() {
         backgroundColor: "#85F4FF",
       },
     }));
+    const handleClick = (Transition) => {
+      setTransition(() => Transition);
+      setAlert(true);setOpen(false)
+    };
+  
+    const handleCloses = () => {
+  
+      setAlert(false);
+    };
     function SimpleDialog(props) {
-      const [coins, setCoins] = useState([]);
+
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
         onClose(selectedValue);
       };
-      var cardStyle = {
-        display: "block",
-        width: "10vw",
-        transitionDuration: "0.3s",
-        height: "12vw",
-      };
-      const Root = styled(( theme ) => ({
-       Paper:{ 
-        [theme.breakpoints.down('sm')]: {
-          width: "20ch",
-          backgroundColor: "#EFFFFD",
-          justifyContent: "center",
-          p: 2,
-          display: "flex",
-          height: 150,
-       },[theme.breakpoints.down('md')]: {
-        width: "30ch",
-        backgroundColor: "#000",
-        justifyContent: "center",
-        p: 2,
-        display: "flex",
-        height: 350,
-     }
-        },
 
-      }));
+    
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
-          <DialogTitle style={{ textAlign: "center" }}>
-            <h2>Add</h2>
-          </DialogTitle>
           <Container style={{ textAlign: "center" }}>
             <DialogContent>
-             
-            <Card sx={{ maxWidth: 500 }} variant="outlined">
-                  <CardContent>
-                    <FormControl
-                      sx={{ mt: 6, width: "35ch" }}
-                      variant="outlined"
+              <Card sx={{ maxWidth: 500 }} variant="outlined">
+                <CardContent>
+                  <h2>ADD LP</h2>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Input"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="start">BTC</InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      pt: 5,
+                      mt: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <AddIcon sx={{ fontSize: 45 }} />
+                  </Box>
+                  <FormControl sx={{ mt: 5, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Input"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="start">ETC</InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </FormControl>
+                </CardContent>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    p: 1,
+                    m: 1,
+                    bgcolor: "background.paper",
+                    borderRadius: 1,
+                  }}
+                >
+                  {Login ? (
+                    <div>
+                      <ColorButton
+                        sx={{ minWidth: 150 }}
+                        onClick={() => handleClick(TransitionLeft)}
+                      >
+                        Add LP
+                      </ColorButton>
+                    </div>
+                  ) : (
+                    <ConnectW />
+                  )}
+                </Box>
+              </Card>
+            </DialogContent>
+          </Container>
+        </Dialog>
+      );
+    }
+    return (
+      <div>
+        <ColorButton variant="contained" onClick={handleClickOpen}>
+          Add LP
+        </ColorButton>
+        <SimpleDialog open={open} onClose={handleClose} />
+        <Snackbar
+     
+          open={alerts}
+          onClose={handleCloses}
+          autoHideDuration={1000}
+          TransitionComponent={transition}
+          key={transition ? transition.name : ''}
+        >
+          <Alert severity="success">Add LP Success</Alert>
+        </Snackbar>
+      </div>
+    );
+  };
+  const Popup4 = () => {
+    const [open, setOpen] = useState(false);
+    const [alerts, setAlert] = useState(false);
+    const [transition, setTransition] = React.useState(undefined);
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const ColorButton2 = styled(Button)(({ theme }) => ({
+      color: theme.palette.getContrastText(purple[500]),
+      backgroundColor: "#C21010",
+      "&:hover": {
+        backgroundColor: "#E64848",
+      },
+    }));
+    const handleClick = (Transition) => {
+      setTransition(() => Transition);
+      setAlert(true);setOpen(false)
+    };
+  
+    const handleCloses = () => {
+  
+      setAlert(false);
+    };
+    function SimpleDialog(props) {
+ 
+      const { onClose, selectedValue, open } = props;
+      const handleClose = () => {
+        onClose(selectedValue);
+      };
+ 
+      return (
+        <Dialog onClose={handleClose} open={open} maxWidth="sm">
+          <Container style={{ textAlign: "center" }}>
+            <DialogContent>
+              <Card sx={{ maxWidth: 500 }} variant="outlined">
+                <CardContent>
+                  <h2>REMOVE LP</h2>
+                  <FormControl sx={{ mt: 6, width: "35ch" }} variant="outlined">
+                    <TextField
+                      id="input-with-icon-textfield"
+                      label="Your LP Tokens"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            BTC-ETC
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                    <br />
+
+                    <ToggleButtonGroup
+                      color="primary"
+                      fullWidth
+                      exclusive
+                      value={alignment}
+                      onChange={handleAlignment}
                     >
-                      <TextField
-                        id="input-with-icon-textfield"
-                        label="Input                 Balance 0"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              BTC
-                            </InputAdornment>
-                          ),
-                        }}
-                        variant="standard"
-                      />
-                    </FormControl>
+                      <ToggleButton
+                        size="large"
+                        value="left"
+                        aria-label="left aligned"
+                      >
+                        25%
+                      </ToggleButton>
+                      <ToggleButton
+                        size="large"
+                        value="center"
+                        aria-label="centered"
+                      >
+                        50%
+                      </ToggleButton>
+                      <ToggleButton
+                        size="large"
+                        value="right"
+                        aria-label="right aligned"
+                      >
+                        75%
+                      </ToggleButton>
+                      <ToggleButton
+                        size="large"
+                        value="justify"
+                        aria-label="justified"
+                      >
+                        MAX
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  </FormControl>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      p: 1,
+                      m: 1,
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <ArrowDownwardIcon />
+                  </Box>
+
+                  <FormControl sx={{ m: 1, width: "37ch" }} variant="outlined">
+                    <OutlinedInput
+                      id="outlined-adornment-weight"
+                      defaultValue={"0.00"}
+                      fullWidth
+                      disabled
+                      endAdornment={
+                        <InputAdornment position="end">BTC</InputAdornment>
+                      }
+                      aria-describedby="outlined-weight-helper-text"
+                    />
                     <Box
                       sx={{
                         display: "flex",
                         justifyContent: "center",
-                        pt: 5,
-                        mt: 1,
+                        p: 1,
+
                         bgcolor: "background.paper",
                         borderRadius: 1,
                       }}
                     >
-                      <SwapVerticalCircleIcon sx={{ fontSize: 45 }} />
+                      <AddIcon sx={{ fontSize: 25 }} />
                     </Box>
-                    <FormControl
-                      sx={{ mt: 5, width: "35ch" }}
-                      variant="outlined"
-                    >
-                      <TextField
-                        id="input-with-icon-textfield"
-                        label="Input"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              ETC
-                            </InputAdornment>
-                          ),
-                        }}
-                        variant="standard"
-                      />
-                    </FormControl>
-                  </CardContent>
-
+                    <OutlinedInput
+                      id="outlined-adornment-weight"
+                      defaultValue={"0.00"}
+                      fullWidth
+                      disabled
+                      endAdornment={
+                        <InputAdornment position="end">ETC</InputAdornment>
+                      }
+                      aria-describedby="outlined-weight-helper-text"
+                    />
+                  </FormControl>
                   <Box
                     sx={{
                       display: "flex",
@@ -364,17 +536,20 @@ export default function EnhancedTable() {
                     }}
                   >
                     {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          Stack
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
+                      <div>
+                        <ColorButton2
+                          sx={{ minWidth: 150 }}
+                          onClick={() => handleClick(TransitionLeft)}
+                        >
+                          Remove LP
+                        </ColorButton2>
+                      </div>
+                    ) : (
+                      <ConnectW />
+                    )}
                   </Box>
-                </Card>
-           
+                </CardContent>
+              </Card>
             </DialogContent>
           </Container>
         </Dialog>
@@ -382,103 +557,18 @@ export default function EnhancedTable() {
     }
     return (
       <div>
-        <Button variant="contained" onClick={handleClickOpen}>
-          Add
-        </Button>
+        <ColorButton2 variant="contained" onClick={handleClickOpen}>
+          Remove LP
+        </ColorButton2>
         <SimpleDialog open={open} onClose={handleClose} />
-      </div>
-    );
-  };
-  const Popup4 = () => {
-    const [open, setOpen] = useState(false);
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
-    };
-    const ColorButton = styled(Button)(({ theme }) => ({
-      color: theme.palette.getContrastText(purple[500]),
-      backgroundColor: "#42C2FF",
-      "&:hover": {
-        backgroundColor: "#85F4FF",
-      },
-    }));
-    function SimpleDialog(props) {
-      const [coins, setCoins] = useState([]);
-      const { onClose, selectedValue, open } = props;
-      const handleClose = () => {
-        onClose(selectedValue);
-      };
-      var cardStyle = {
-        display: "block",
-        width: "10vw",
-        transitionDuration: "0.3s",
-        height: "12vw",
-      };
-      return (
-        <Dialog onClose={handleClose} open={open} maxWidth="sm">
-          <DialogTitle style={{ textAlign: "center" }}>
-            <h2>Remove</h2>
-          </DialogTitle>
-          <Container style={{ textAlign: "center" }}>
-            <DialogContent>
-
-            <Card sx={{ maxWidth: 500 }} variant="outlined">
-                  <CardContent>
-                    <FormControl
-                      sx={{ mt: 6, width: "35ch" }}
-                      variant="outlined"
-                    >
-                      <TextField
-                        id="input-with-icon-textfield"
-                        label="From"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              BTC-ETC
-                            </InputAdornment>
-                          ),
-                        }}
-                        variant="standard"
-                      />
-                    </FormControl>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        p: 1,
-                        m: 1,
-                        bgcolor: "background.paper",
-                        borderRadius: 1,
-                      }}
-                    >
-                      {Login ? (
-                        <div>
-                          <ColorButton sx={{ minWidth: 150 }} onClick={() => handleClose()}>
-                          Stack
-                          </ColorButton>
-                        </div>
-                      ) : (
-                        <ConnectW />
-                      )}
-                    </Box>
-                  </CardContent>
-                </Card>
-       
-            </DialogContent>
-          </Container>
-        </Dialog>
-      );
-    }
-    return (
-      <div>
-        <Button variant="contained" color="error" onClick={handleClickOpen}>
-          Remove
-        </Button>
-        <SimpleDialog open={open} onClose={handleClose} />
+        <Snackbar
+          open={alerts}
+          onClose={handleCloses}
+          autoHideDuration={1000}
+          TransitionComponent={transition}
+          key={transition ? transition.name : ''}
+        ><Alert severity="error">Remove LP Success</Alert>
+        </Snackbar>
       </div>
     );
   };
@@ -490,10 +580,6 @@ export default function EnhancedTable() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -552,11 +638,10 @@ export default function EnhancedTable() {
                       <TableCell>
                         <Box sx={{ flexGrow: 1 }}>
                           <Grid container spacing={1}>
-                          
-                              {Popup3()}
-                            <br/>&nbsp;
-                              {Popup4()}
-                           
+                            {Popup3()}
+                            <br />
+                            &nbsp;
+                            {Popup4()}
                           </Grid>
                         </Box>
                       </TableCell>
@@ -585,10 +670,6 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </Box>
   );
 }

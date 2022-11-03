@@ -6,6 +6,8 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Chart as ChartJS,
@@ -121,9 +123,25 @@ function Chart() {
             ></AdvancedRealTimeChart>
           </Box>
         </Container>
-      ) :  <ThemeProvider theme={theme}>
-      <Typography variant="body1">Loading....</Typography>
-    </ThemeProvider>}
+      ) : (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: "120vh" }}
+        >
+          <Grid item xs={3}>
+            <ThemeProvider theme={theme}>
+              <Typography variant="body1">
+                <h3> Plsese select Coin </h3>
+              </Typography>
+            </ThemeProvider>
+            <CurrencyExchangeIcon sx={{ color: "#FFFFFF", fontSize: 240 }} />
+          </Grid>
+        </Grid>
+      )}
     </div>
   );
 }

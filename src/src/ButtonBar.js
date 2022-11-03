@@ -22,20 +22,7 @@ export default function Footer() {
       },
     },
   });
-  const ColorButton1 = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: "#42C2FF",
-    "&:hover": {
-      backgroundColor: "#85F4FF",
-    },
-  }));
-  const ColorButton2 = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: "#42C2FF",
-    "&:hover": {
-      backgroundColor: "#85F4FF",
-    },
-  }));
+
   return (
     <ThemeProvider theme={customTheme}>
       <React.Fragment>
@@ -44,6 +31,7 @@ export default function Footer() {
           color="duio"
           sx={{ top: "auto", bottom: 0, height: "10vh" }}
         >
+          <br/>
           <Toolbar>
             <div className="container">
               <div className="row ">

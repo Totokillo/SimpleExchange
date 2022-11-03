@@ -14,10 +14,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { ConnectW } from "../components/ConnectW";
-import { Paper } from "@mui/material";
 import Alert from "@mui/material/Alert";
 const pages = ["Swap", "Farms", "Pools"];
-
+localStorage.removeItem("id");
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [Login, setLogin] = React.useState(
@@ -50,9 +49,9 @@ const Header = () => {
   };
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: "#42C2FF",
+    backgroundColor: "#C21010",
     "&:hover": {
-      backgroundColor: "#85F4FF",
+      backgroundColor: "#E64848",
     },
   }));
 
@@ -172,7 +171,7 @@ const Header = () => {
                   sx={{ minWidth: 150 }}
                   onClick={() => handleStatusOut()}
                 >
-                  LogOut
+                  Disconnect
                 </ColorButton>
               ) : (
                 <ConnectW />
@@ -182,12 +181,17 @@ const Header = () => {
         </Container>
         {Alerts ? (
           <Alert
+          autoHideDuration={1000}
             severity="success"
+            sx={{
+              display: "flex-box",
+            }}
             onClose={() => {
-              setAlerts(false);localStorage.setItem("StatusAlert", JSON.stringify(false));
+              setAlerts(false);
+              localStorage.setItem("StatusAlert", JSON.stringify(false));
             }}
           >
-            Welcome To Exchage
+            Welcome To Exchange
           </Alert>
         ) : null}
       </AppBar>

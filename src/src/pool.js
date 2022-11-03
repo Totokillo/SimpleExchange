@@ -25,6 +25,7 @@ export default function Pool() {
     >
       <Container maxWidth="auto">
         <Stack spacing>
+          <br />
           <Card sx={{ minWidth: "auto" }}>
             <CardContent>
               <Typography sx={{ fontSize: 30 }}>Pool</Typography>
@@ -56,7 +57,8 @@ export default function Pool() {
           </Card>
           <Grid container spacing={0}>
             <EnhancedTable />
-          </Grid>
+          </Grid>{" "}
+          <br />
         </Stack>
       </Container>
     </Box>

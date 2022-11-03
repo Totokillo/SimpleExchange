@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Card from "@mui/material/Card";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -7,10 +7,11 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
-import Alert from "@mui/material/Alert";
+
 export const ConnectW = () => {
   const [Login, setLogin] = useState(false);
   const [open, setOpen] = useState(false);
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
     backgroundColor: "#42C2FF",
@@ -18,6 +19,7 @@ export const ConnectW = () => {
       backgroundColor: "#85F4FF",
     },
   }));
+
   const handleClickOpen = () => {
     setOpen(true);
   };
