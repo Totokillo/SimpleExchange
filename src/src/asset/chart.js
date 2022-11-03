@@ -7,8 +7,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -138,7 +138,7 @@ function Chart() {
                 <h3> Plsese select Coin </h3>
               </Typography>
             </ThemeProvider>
-            <CurrencyExchangeIcon sx={{ color: "#FFFFFF", fontSize: 240 }} />
+            <QueryStatsIcon sx={{ color: "#FFFFFF", fontSize: 240 }} />
           </Grid>
         </Grid>
       )}
