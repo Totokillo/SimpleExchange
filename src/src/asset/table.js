@@ -411,6 +411,9 @@ export default function EnhancedTable() {
     const handleClick = (Transition) => {
       setTransition(() => Transition);
       setAlert(true);setOpen(false)
+      setvar1(null);
+      setvar2(null);
+      setvar3(null);
     };
   
     const handleCloses = () => {
