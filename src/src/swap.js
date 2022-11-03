@@ -537,6 +537,8 @@ export default function Swap() {
       const { onClose, selectedValue, open } = props;
       const handleClose = () => {
         onClose(selectedValue);
+        setvar1(null);
+        setvar2(null);
       };
       return (
         <Dialog onClose={handleClose} open={open} maxWidth="sm">
