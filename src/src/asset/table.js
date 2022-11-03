@@ -389,6 +389,11 @@ export default function EnhancedTable() {
     const [open, setOpen] = useState(false);
     const [alerts, setAlert] = useState(false);
     const [transition, setTransition] = React.useState(undefined);
+    const [var1, setvar1] = React.useState(null);
+    const [var2, setvar2] = React.useState(null);
+    const [var3, setvar3] = React.useState(null);
+
+
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -411,6 +416,14 @@ export default function EnhancedTable() {
     const handleCloses = () => {
   
       setAlert(false);
+    };
+    const handleChange = (event) => {
+      setvar1(event.target.value);
+      const result =
+        parseFloat(event.target.value, 10) / 2
+          
+      setvar2(result);
+      setvar3(result);
     };
     function SimpleDialog(props) {
  
@@ -438,6 +451,8 @@ export default function EnhancedTable() {
                         ),
                       }}
                       variant="standard"
+                      value={var1}
+                      onChange={handleChange}
                     />
                     <br />
 
@@ -497,6 +512,7 @@ export default function EnhancedTable() {
                       defaultValue={"0.00"}
                       fullWidth
                       disabled
+                      value={var2}
                       endAdornment={
                         <InputAdornment position="end">BTC</InputAdornment>
                       }
@@ -519,6 +535,7 @@ export default function EnhancedTable() {
                       defaultValue={"0.00"}
                       fullWidth
                       disabled
+                      value={var3}
                       endAdornment={
                         <InputAdornment position="end">ETC</InputAdornment>
                       }
